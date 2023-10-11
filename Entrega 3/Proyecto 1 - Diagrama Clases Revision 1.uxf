@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>665</x>
+      <y>266</y>
+      <w>259</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>Inventario
+--
+_-prioridadCategoria: List&lt;String&gt;_
+-vehiculos: Map&lt;String, 
+   Map&lt;String, Map&lt;String, Vehiculo&gt; &gt;
+ &gt; // por categoria
+-reservas: Map&lt;String, Reserva&gt; // id cliente
+-archivoInventario: String
+-calendario: Map&lt;String, List&lt;Range&lt;LocalDateTime&gt;&gt;&gt;
+--
+#Inventario(archivoInventario: String): Inventario
+#agregarVehiculo(vehiculo: Vehiculo)
+#removerVehiculo(placa: String)
+#actualizarEstadoVehiculo(String placa, String estado)
+#crearReserva(cliente: Cliente,
+     categoriaSolicitada: String,
+     fechaDevolucion: LocalDateTime,
+     ubicacionDevolucion: String,
+     fechaRecogida: LocalDateTime,
+     ubicacionRecogida: LocalDateTime)
+-
+-- la llave de vehiculos es la categoria, la llave de sub
+   mapa es el estado del carro
+-- cargar datos de vehiculos
+-- manejar la devolucion de carros
+-- el calendario almacena las fechas para las cuales cada
+   carro estara en uso, sirve para el sistema de reservas</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>686</y>
+      <w>259</w>
+      <h>392</h>
+    </coordinates>
+    <panel_attributes>Vehiculo
+--
+-placa: String
+-marca: String
+-color: String
+-transmision: String
+-clasificacion: String
+-conductores: List&lt;LicenciaDeConduccion&gt;
+-sede: String
+
+-ubicacion: String
+-fechaDisponible: LocalDateTime
+-comentarios: String
+
+-ubicacionDevolucion: String
+-fechaDevolucion: LocalDateTime
+
+-estado: String
+
+--
+#Vehiculo(placa: String, marca: String,
+   color: String, transmision: String,
+   clasificacion: String,
+   conductores: List&lt;LicenciaDeConduccion&gt;,
+   sede: String,
+   fechaDisponible: LocalDateTime, comentarios: String,
+   cliente: Cliente, ubicacionDevolucion: String,
+   fechaDevolucion: LocalDateTime, estado: String
+): Vehiculo
+#parse(datosVehiculo: String): Vehiculo
+#toString(): String
+--
+- prioridadCategoria es una lista donde la primera
+ categoria es la mejor y la ultima la peor
+- dependiendo del estado, algunas propiedades seran
+  null</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>231</y>
+      <w>259</w>
+      <h>343</h>
+    </coordinates>
+    <panel_attributes>App
+--
+-archivoClientes: String
+-archivoSeguros: String
+-archivoSedes: String
+-inventario: Inventario
+-clientes: Map&lt;String, Cliente&gt;
+-seguros: List&lt;Seguro&gt;
+-sedes: List&lt;Sede&gt;
+-usuario: Usuario
+--
+#login(String nombre, String contraseña): Usuario
+#cerrarSesion()
+#registrarCliente(nombres: String, numeroTelefono: String,
+   direccion: String, fechaNacimiento: String,
+   nacionalidad: String, imagenDocumentoIdentidad: String,
+   licenciaConduccion: LicenciaDeConduccion,
+   tarjetaCredito: TarjetaDeCredito)
+#mostrarMenuUsuario()
+#mostrarMenuAdminGeneral()
+#mostrarMenuAdminSede()
+#mostrarMenuEmpleadoSede()
+#mostrarMenuEmpleadoSedeMantenimiento()
+#mostrarMenuCliente()
+#App(): App // carga datos
+#cargarInventario(): Inventario
+#cargarClientes(): Map&lt;String, Cliente&gt;
+#cargarSedes(): Map&lt;String, Sede&gt;
+#guardarClientes(): Boolean
+--
+- mostrarMenuUsuario() llama una de las funciones de
+  mostrar menu especifico para un usuario</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>231</y>
+      <w>224</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>Cliente implements Usuario
+--
+-nombreUsuario: String
+-contrasena: String
+-nombres: String
+-numeroTelefono: String
+-direccion: String
+-fechaNacimiento: String
+-nacionalidad: String
+-imagenDocumentoIdentidad: String
+-licenciaConduccion: LicenciaDeConduccion
+-tarjetaCredito: TarjetaDeCredito
+--
+#Cliente(nombres: String,
+     numeroTelefono: String, direccion: String,
+     fechaNacimiento: String, nacionalidad: String,
+     imagenDocumentoIdentidad: Image,
+     licenciaConduccion: LicenciaDeConduccion,
+     tarjetaCredito: TarjetaDeCredito): Cliente
+#parse(datosCliente: String): Client
+#toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>490</y>
+      <w>224</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>LicenciaDeConduccion
+--
+-numero: int
+-paisExpedicion: String
+-fechaVencimiento: String
+-imagen: Image
+--
+#LicenciaDeConduccion(numero:int,
+     paisExpedicion: String,
+     fechaVencimiento: String,
+     imagen: Image): LicenciaDeConduccion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>637</y>
+      <w>224</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>TarjetaDeCredito
+--
+-numero: int
+-fechaVencimiento: String
+-cvv: int
+--
+#TarjetaDeCredito(numero: int,
+     fechaVencimiento: String,
+     cvv: int): TarjetaDeCredito</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>665</x>
+      <y>581</y>
+      <w>259</w>
+      <h>259</h>
+    </coordinates>
+    <panel_attributes>Reserva
+--
+-categoriaSolicitada: String
+-fechaRecogida: LocalDateTime
+-ubicacionRecogida: String
+-ubicacionEntrega: String
+-rangoEntrega: Range&lt;LocalDateTime&gt;
+-cliente: Cliente
+-vehiculo: Vehiculo
+--
+#Reserva(categoriaSolicitada: String,
+     fechaRecogida: LocalDateTime,
+     ubicacionRecogida: String,
+     ubicacionEntrega: String,
+     rangoEntrega: Range&lt;LocalDateTime&gt;
+     Vehiculo: Vehiculo): Reserva
+#setVehiculo(Vehiculo vehiculo)
+#setFechaEntrega(LocalDateTime fecha)
+#calcularCosto(): Double
+--
+--el vehiculo a alquilar se determina el dia antes de
+ realizar la entrega
+--
+- una reserva se vuelve un alquiler en el momento que un
+  empleado le asigna un vehiculo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>329</y>
+      <w>49</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>105</x>
+      <y>350</y>
+      <w>35</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;240.0;10.0;240.0;10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>91</x>
+      <y>364</y>
+      <w>49</w>
+      <h>322</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>50.0;440.0;10.0;440.0;10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>595</y>
+      <w>259</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Seguro
+--
+-nombre: String
+-costoDiario: Float
+--
+#Seguro(nombre: String, costoDiario: Float): Seguro</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>357</x>
+      <y>336</y>
+      <w>35</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;380.0;10.0;380.0;10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>301</y>
+      <w>49</w>
+      <h>406</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;560.0;30.0;560.0;30.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>756</y>
+      <w>224</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Sede
+--
+-nombre: String
+-ubicacion: String
+-horariosDeAtencion: List&lt;HorarioDeAtencion&gt;
+-empleados: Map&lt;String, Empleado&gt;
+--
+#Sede(nombre: String,
+     ubicacion: String,
+     horariosDeAtencion: List&lt;HorarioDeAtencion&gt;
+ ): Sede
+--
+- llave de empleados es el nombre de usuario</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>910</y>
+      <w>224</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>HorarioDeAtencion
+--
+-dia: String
+-horas: Range&lt;Integer&gt;
+--
+#HorarioDeAtencion(dia: String,
+     horas: Range&lt;Integer&gt;): HorarioDeAtencion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>105</x>
+      <y>784</y>
+      <w>35</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;230.0;10.0;230.0;10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>350</y>
+      <w>49</w>
+      <h>455</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;630.0;30.0;630.0;30.0;530.0;20.0;530.0;20.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>917</x>
+      <y>301</y>
+      <w>42</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;480.0;40.0;480.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>434</x>
+      <y>42</y>
+      <w>196</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>Usuario (interfaz)
+--
+-nombreUsuario: String
+-contrasena: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>665</x>
+      <y>126</y>
+      <w>259</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>Note..
+bg=#ff0000
+- Todas las Clases tienen getters y setters
+- la App se encarga de hacer login, mostrar menu
+  dependiendo de tipo de usuario, y en registrar nuevos
+  clientes</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>42</y>
+      <w>259</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Admin implements Usuario
+--
+-nombreUsuario: String
+-contrasena: String
+-sede: Sede
+--
+#cargarSeguros(): Map&lt;String, Seguro&gt;
+#agregarVehiculo(Vehiculo vehiculo)
+#removerVehiculo(Vehiculo vehiculo): boolean
+#agregarEmpleado(Empleado empleado)
+#removerEmpleado(Empleado empleado)
+--
+- al agregar un vehiculo se agrega al inventario
+- al remover un vehiculo se revisa que no este alquilado
+- un Admin es un Admin general si sede == null, y es un
+  Admin de Sede si sede != null</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>406</x>
+      <y>119</y>
+      <w>224</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>Empleado implements Usuario
+--
+-nombreUsuario: String
+-contrasena: String
+--
+#alquilarVehiculo(Vehiculo vehiculo)
+#alquilarVehiculoReservado(Reserva reserva,
+   Vehiculo vehiculo)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>231</x>
+      <y>70</y>
+      <w>217</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;230.0;10.0;210.0;230.0;210.0;230.0;10.0;290.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>49</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>84</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
