@@ -1,6 +1,12 @@
 package clases;
 
-public class LicenciaDeConduccion {
+import java.io.Serializable;
+
+public class LicenciaDeConduccion implements Serializable {
+	private static final long serialVersionUID = -4977841391704972753L;
+	/**
+	 * 
+	 */
 	private int numero;
 	private String paisExpedicion;
 	private String fechaVencimiento;

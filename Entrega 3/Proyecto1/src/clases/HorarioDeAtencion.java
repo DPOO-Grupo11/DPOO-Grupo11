@@ -1,6 +1,12 @@
 package clases;
 
-public class HorarioDeAtencion {
+import java.io.Serializable;
+
+public class HorarioDeAtencion implements Serializable {
+	private static final long serialVersionUID = 6340839134383635203L;
+	/**
+	 * 
+	 */
 	private String dia;
 	private Range<Integer> horas;
 

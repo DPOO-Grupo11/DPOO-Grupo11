@@ -1,7 +1,13 @@
 package clases;
 
-public class Range<T extends Comparable<? super T>> {
-    private T low;
+import java.io.Serializable;
+
+public class Range<T extends Comparable<? super T>> implements Serializable {
+	private static final long serialVersionUID = -3579384219578136573L;
+	/**
+	 * 
+	 */
+	private T low;
     private T high;
 
     public Range(T low, T high) {
