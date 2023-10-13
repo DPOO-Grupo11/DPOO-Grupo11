@@ -4,20 +4,18 @@ import java.util.ArrayList;
 class Sede {
   private String nombre;
   private String ubicacion;
-  private LocalTime horaApertura;
-  private LocalTime horaCierre;
-  private ArrayList<String> diasApertura;
+  private ArrayList<HorarioDeAtencion> horariosDeAtencion;
+  private ArrayList<Empleado> empleados; 
 
   public Sede(String nombre,
       String ubicacion,
-      LocalTime horaApertura,
-      LocalTime horaCierre,
-      ArrayList<String> diasApertura) {
+      ArrayList<HorarioDeAtencion> horariosDeAtencion,
+      ArrayList<Empleado> empleados
+      ) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
-    this.horaApertura = horaApertura;
-    this.horaCierre = horaCierre;
-    this.diasApertura = diasApertura;
+    this.horariosDeAtencion = horariosDeAtencion;
+    this.empleados = empleados;
   }
 
   public void setNombre(String nombre) {
@@ -27,19 +25,23 @@ class Sede {
   public void setUbicacion(String ubicacion) {
     this.ubicacion = ubicacion;
   }
-
-  public void setHoraApertura(LocalTime horaApertura) {
-    this.horaApertura = horaApertura;
+  
+  public void setHorariosDeAtencion(ArrayList<HorarioDeAtencion> horariosDeAtencion) {
+    this.horariosDeAtencion = horariosDeAtencion;
   }
 
-  public void setHoraCierre(LocalTime horaCierre) {
-    this.horaCierre = horaCierre;
+  public void setEmpleados(ArrayList<Empleado> empleados) {
+    this.empleados = empleados;
   }
-
-  public void setDiasApertura(String diasApertura) {
-    this.diasApertura = diasApertura;
+  
+  public void agregarEmpleado(Empleado e) {
+	  this.empleados.add(e);
   }
-
+  
+  public boolean removerEmpleado(Empleado e) {
+	  return this.empleados.remove(e);
+  }
+  
   public String getNombre() {
     return this.nombre;
   }
@@ -47,16 +49,12 @@ class Sede {
   public String getUbicacion() {
     return this.ubicacion;
   }
-
-  public LocalTime getHoraApertura() {
-    return this.horaApertura;
+  
+  public ArrayList<HorarioDeAtencion> getHorariosDeAtencion() {
+    return this.horariosDeAtencion;
   }
 
-  public LocalTime getHoraCierre() {
-    return this.horaCierre;
-  }
-
-  public ArrayList<String> getDiasApertura() {
-    return this.diasApertura;
+  public ArrayList<Empleado> getEmpleados( ) {
+    return this.empleados;
   }
 }
