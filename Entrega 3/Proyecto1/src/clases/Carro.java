@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 class Carro {
   private String placa;
   private String marca;
