@@ -16,9 +16,11 @@ public class Cliente extends Usuario implements Serializable {
 	private LicenciaDeConduccion licenciaDeConduccion;
 	private TarjetaDeCredito tarjetaDeCredito;
 
-	public Cliente(String nombres, String numeroTelefono, String direccion, String fechaNacimiento, String nacionalidad,
+	public Cliente(String usuario, String contraseña, String nombres, String numeroTelefono, String direccion, String fechaNacimiento, String nacionalidad,
 			String imagenDocumentoIdentidad, LicenciaDeConduccion licenciaDeConduccion,
 			TarjetaDeCredito tarjetaDeCredito) {
+		super.usuario = usuario;
+		super.contraseña = contraseña;
 		this.nombres = nombres;
 		this.numeroTelefono = numeroTelefono;
 		this.direccion = direccion;

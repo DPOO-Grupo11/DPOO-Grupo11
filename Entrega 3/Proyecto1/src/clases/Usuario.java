@@ -7,9 +7,9 @@ public abstract class Usuario implements Serializable {
 	/**
 	 * 
 	 */
-	private String usuario;
-	private String contraseña;
-	private String tipo;
+	protected String usuario;
+	protected String contraseña;
+	protected String tipo;
 
 	/*
 	 * getters
