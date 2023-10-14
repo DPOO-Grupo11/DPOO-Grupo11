@@ -22,4 +22,10 @@ public class HorarioDeAtencion implements Serializable {
 	public String getDia() {
 		return this.dia;
 	}
+	public void setHoras(Range<Integer> hora){
+		this.horas = hora;
+	}
+	public void setDia(String d_dia){
+		this.dia = d_dia;
+	}
 }

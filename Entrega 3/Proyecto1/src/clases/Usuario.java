@@ -11,19 +11,26 @@ public abstract class Usuario implements Serializable {
 	protected String contraseña;
 	protected String tipo;
 
+	public Usuario(String usuario, String contraseña, String tipo){
+		this.usuario = usuario;
+		this.contraseña = contraseña;
+		this.tipo = tipo;
+	}
+
+
 	/*
 	 * getters
 	 */
 	public String getUsuario() {
-		return usuario;
+		return this.usuario;
 	}
 
 	public String getContraseña() {
-		return contraseña;
+		return this.contraseña;
 	}
 
 	public String getTipo() {
-		return tipo;
+		return this.tipo;
 	}
 	
 	/*
