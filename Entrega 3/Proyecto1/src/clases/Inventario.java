@@ -1,72 +1,62 @@
-<<<<<<< HEAD
 package clases;
 
 import java.io.Serializable;
-
-public class Inventario implements Serializable{
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
-	
-}
-=======
-package clases;
-
-import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Inventario implements Serializable {
-	private static final long serialVersionUID = 9987630713456293001L;
+	private static final long serialVersionUID = 5150589531983728391L;
 	/**
 	 * 
 	 */
-	private List<String> prioridadCategoria;
+	public static final List<String> prioridadCategoria = Arrays.asList(new String[] { "camion", "carro", "moto" });
 	private Map<String, Vehiculo> vehiculos;
-    private Map<String, Reserva>  reservas;
-    private String archivoInventario;
-    private Map<String, List<Range<LocalDateTime>>> calendario;
+	private Map<String, Reserva> reservas;
+	private Map<String, List<Range<LocalDateTime>>> calendario;
 
-	public HorarioDeAtencion(List<String> prioridadCategoria,  Map<String, Vehiculo> vehiculos, Map<String, Reserva>  reservas, String archivoInventario, Map<String, List<Range<LocalDateTime>>> calendario) {
-		this.prioridadCategoria = prioridadCategoria;
-		this.vehiculos = vehiculos;
-        this.reservas = reservas;
-        this.archivoInventario = archivoInventario;
-        this.calendario = calendario;
+	public Inventario() {
+		this.vehiculos = new HashMap<String, Vehiculo>();
+		this.reservas = new HashMap<String, Reserva>();
+		this.calendario = new HashMap<String, List<Range<LocalDateTime>>>();
 	}
 
-	public List<String> getCategoria(){
-        return this.prioridadCategoria;
-    }
+	public Inventario(Map<String, Vehiculo> vehiculos, Map<String, Reserva> reservas,
+			Map<String, List<Range<LocalDateTime>>> calendario) {
+		this.vehiculos = vehiculos;
+		this.reservas = reservas;
+		this.calendario = calendario;
+	}
 
-    public Map<String, Vehiculo> getVehiculo(){
-        return this.vehiculos;
-    }
-    public  Map<String, Reserva> getReserva(){
-        return this.reservas;
-    }
-    public String getArchivoInventario(){
-        return this.archivoInventario;
-    }
-    public  Map<String, List<Range<LocalDateTime>>> getCalendario(){
-        return this.calendario;
-    }
+	/*
+	 * getters
+	 */
+	public Map<String, Vehiculo> getVehiculo() {
+		return this.vehiculos;
+	}
 
+	public Map<String, Reserva> getReserva() {
+		return this.reservas;
+	}
 
-    public void setCategoria(List<String> Cate){
-        this.prioridadCategoria = Cate;
-    }
+	public Map<String, List<Range<LocalDateTime>>> getCalendario() {
+		return this.calendario;
+	}
 
-    public void setVehiculo(Map<String, Vehiculo> Vehi){
-        this.vehiculos = Vehi;
-    }
-    public  void setReserva(Map<String, Reserva> reser){
-        this.reservas = reser;
-    }
-    public void setArchivoInventario(String Archivo){
-        this.archivoInventario = Archivo;
-    }
-    public  void getCalendario(Map<String, List<Range<LocalDateTime>>> calen){
-        this.calendario = calen;
-    }
+	/*
+	 * setters
+	 */
+	public void setVehiculo(Map<String, Vehiculo> Vehi) {
+		this.vehiculos = Vehi;
+	}
+
+	public void setReserva(Map<String, Reserva> reser) {
+		this.reservas = reser;
+	}
+
+	public void getCalendario(Map<String, List<Range<LocalDateTime>>> calen) {
+		this.calendario = calen;
+	}
 }
->>>>>>> c65afe1b52775a58aabbc4669ddd4072ce7d0a11

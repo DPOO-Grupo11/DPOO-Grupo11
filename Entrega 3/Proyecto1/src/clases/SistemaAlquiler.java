@@ -1,24 +1,19 @@
 package clases;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
-	private static final String pathArchivoDatos = "./datos";
-	private static final String dirImagenes = "./";
+	// toca pedir archivo de persistencia cada vez que se inicie programa
+	private static final String dirDatos = System.getProperty("user.dir");;
 
 	public SistemaAlquiler() throws FileNotFoundException, IOException {
 		System.out.println("hola");
@@ -27,17 +22,33 @@ public class SistemaAlquiler {
 	/*
 	 * funciones
 	 */
-	public void cargarDatos() throws IOException {
+	/**
+	 * si se lanza error, significa que no se pudieron cargar los datos los datos se
+	 * cargan automaticamente, si no existe un archivo de
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void cargarDatos() throws IOException, ClassNotFoundException {
 		// cargar bytes de archivo
-		File archivoDatos = new File(pathArchivoDatos);
-		byte[] bytes = Files.readAllBytes(archivoDatos.toPath());
-		// convertir bytes a objeto
-		ByteArrayInputStream bs= new ByteArrayInputStream(bytes); // bytes es el byte[]
-		ObjectInputStream is = new ObjectInputStream(bs);
-		ContenedorDeDatos unObjetoSerializable = (ContenedorDeDatos)is.readObject();
-		is.close();
+		File archivoDatos = new File(dirDatos, "datos");
+		if (archivoDatos.exists()) {
+			byte[] bytes = Files.readAllBytes(archivoDatos.toPath());
+			// convertir bytes a objeto
+			ByteArrayInputStream bs = new ByteArrayInputStream(bytes); // bytes es el byte[]
+			ObjectInputStream is = new ObjectInputStream(bs);
+			datos = (ContenedorDeDatos) is.readObject();
+			is.close();
+		} else {
+			datos = new ContenedorDeDatos();
+		}
 	}
 
+	/**
+	 * si lanza un error, significa que no se pudieron guardar datos
+	 * 
+	 * @throws IOException
+	 */
 	public void guardarDatos() throws IOException {
 		// convertir objeto de datos a bytes
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -46,7 +57,11 @@ public class SistemaAlquiler {
 		os.close();
 		byte[] bytes = bs.toByteArray();
 		// guardar bytes en archivo
-		File archivoDatos = new File(pathArchivoDatos);
+		File archivoDatos = new File(dirDatos, "datos");
+		if (!archivoDatos.exists()) {
+			if (!archivoDatos.createNewFile())
+				throw new FileNotFoundException("no se pudo crear el archivo");
+		}
 		try (FileOutputStream outputStream = new FileOutputStream(archivoDatos)) {
 			outputStream.write(bytes);
 		}

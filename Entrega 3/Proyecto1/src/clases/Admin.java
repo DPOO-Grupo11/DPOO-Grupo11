@@ -7,16 +7,9 @@ public abstract class Admin implements Serializable {
 	/**
 	 * 
 	 */
-	protected String nombreUsuario;
+	protected String usuario;
 	protected String contraseña;
 	protected String Sede;
-
-	public Usuario(String nombreUsuario, String contraseña, String sede){
-		this.usuario = nombreUsuario;
-		this.contraseña = contraseña;
-		this.tipo = sede;
-	}
-
 
 	/*
 	 * getters
@@ -32,7 +25,7 @@ public abstract class Admin implements Serializable {
 	public String getSede() {
 		return this.sede;
 	}
-	
+
 	/*
 	 * setters
 	 */

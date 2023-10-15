@@ -10,8 +10,7 @@ public class Empleado extends Usuario implements Serializable {
 	String rol;
 	
 	public Empleado(String usuario, String contraseña, String rol) {
-		super.usuario = usuario;
-		super.contraseña  = contraseña;
+		super(usuario, contraseña, "Empleado");
 		this.rol = rol;
 	}
 	

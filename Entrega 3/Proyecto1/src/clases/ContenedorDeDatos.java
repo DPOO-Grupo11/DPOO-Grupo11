@@ -2,6 +2,7 @@ package clases;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,6 +22,18 @@ public class ContenedorDeDatos implements Serializable {
 	private Map<String, Vehiculo> vehiculos;
 	private Map<String, Reserva> reservas;
 	private Map<String, Empleado> empleados;
+
+	public ContenedorDeDatos() {
+		this. usuario = null;
+		this.  inventario = new Inventario();
+		this.  clientes = new HashMap<String, Cliente>();
+		this.  admins = new HashMap<String, Admin>();
+		this. seguros = new ArrayList<Seguro>();
+		this. sedes = new ArrayList<Sede>();
+		this.  vehiculos = new HashMap<String, Vehiculo>();
+		this.  reservas = new HashMap<String, Reserva>();
+		this.  empleados = new HashMap<String, Empleado>();
+	}
 
 	/*
 	 * getters

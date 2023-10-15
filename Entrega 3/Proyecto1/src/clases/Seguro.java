@@ -8,11 +8,6 @@ public abstract class Seguro implements Serializable {
 	protected String nombre;
 	protected float costoDiario;
 
-	public Usuario(String nombre, float costoDiario){
-		this.nombre = nombre;
-		this.costoDiario = costoDiario;
-	}
-
 
 	/*
 	 * getters
