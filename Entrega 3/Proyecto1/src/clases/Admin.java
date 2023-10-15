@@ -23,7 +23,7 @@ public abstract class Admin implements Serializable {
 	}
 
 	public String getSede() {
-		return this.sede;
+		return this.Sede;
 	}
 
 	/*
@@ -39,6 +39,6 @@ public abstract class Admin implements Serializable {
 	}
 
 	public void setSede(String sede) {
-		this.sede = sede;
+		this.Sede = sede;
 	}
 }

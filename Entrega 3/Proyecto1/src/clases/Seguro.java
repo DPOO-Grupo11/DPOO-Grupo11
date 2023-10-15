@@ -1,3 +1,5 @@
+package clases;
+
 import java.io.Serializable;
 
 public abstract class Seguro implements Serializable {
@@ -31,4 +33,6 @@ public abstract class Seguro implements Serializable {
 	public void setContraseña(float costoDiario) {
 		this.costoDiario = costoDiario;
 	}
+	
+}
 
