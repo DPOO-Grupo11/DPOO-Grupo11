@@ -107,9 +107,7 @@ public class MenuPrincipal {
 	}
 	
 	
-	
-	
-	
+	//Input -------------------------------------------------------------------
 	
 	
 	public String input(String mensaje)
@@ -127,6 +125,9 @@ public class MenuPrincipal {
 		}
 		return null;
 	}
+	
+	
+	//main -------------------------------------------------------------------
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException
 	{
