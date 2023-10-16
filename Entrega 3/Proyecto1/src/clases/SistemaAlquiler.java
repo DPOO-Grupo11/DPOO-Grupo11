@@ -219,14 +219,15 @@ public class SistemaAlquiler {
 
 	}
 
-	public void crearAlquiler(String categoriaSolicitada, LocalDateTime fechaRecogida,
-			String ubicacionRecogida, String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
-			Vehiculo vehiculo, ArrayList<LicenciaDeConduccion> conductoresExtra, Tarifa tarifa) {
+	public void crearAlquiler(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
+			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
+			ArrayList<LicenciaDeConduccion> conductoresExtra) {
 
+		Tarifa tarifa = Inventario.tarifas.get(categoriaSolicitada);
 		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
-				ubicacionEntrega, rangoEntrega, cliente, vehiculo, conductoresExtra, tarifa);
-		datos.getReservas().put(idReserva, r);
-		formalizarAlquiler(idReserva);
+				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
+		datos.getReservas().put(r.getId(), r);
+		formalizarAlquiler(r.getId());
 	}
 
 	public void formalizarAlquiler(String idReserva) {
@@ -237,7 +238,7 @@ public class SistemaAlquiler {
 		Reserva r = datos.getReservas().get(idReserva);
 		// encontrar vehiculo disponible
 		String categoria = r.getCategoriaSolicitada();
-		Vehiculo vehiculoEncontrado;
+		Vehiculo vehiculoEncontrado = null;
 		while (vehiculoEncontrado == null) {
 			for (Vehiculo v : datos.getVehiculos().values()) {
 				if (v.getCategoria() == categoria

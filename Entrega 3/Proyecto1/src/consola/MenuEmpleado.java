@@ -64,11 +64,10 @@ public class MenuEmpleado {
 						contraseñaCliente = input("Contraseña cliente");
 						cliente = (Cliente) sistemaAlquiler.getUsuario(usuario, contraseñaCliente);
 					}
-					Vehiculo vehiculo = null;
-					ArrayList<LicenciaDeConduccion> conductoresExtra;
-					Tarifa tarifa;
+					// TODO
+					ArrayList<LicenciaDeConduccion> conductoresExtra = null;
 					sistemaAlquiler.crearAlquiler(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
-							ubicacionEntrega, rangoEntrega, cliente, vehiculo, conductoresExtra, tarifa);
+							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 3) {
 					// cerrar sesion

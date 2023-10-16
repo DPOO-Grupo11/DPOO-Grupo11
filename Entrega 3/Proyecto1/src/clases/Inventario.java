@@ -12,7 +12,17 @@ public class Inventario implements Serializable {
 	/**
 	 * 
 	 */
-	public static final List<String> prioridadCategoria = Arrays.asList(new String[] { "camion", "carro", "moto" });
+	public static final List<String> prioridadCategoria = Arrays
+			.asList(new String[] { "Pequeños", "SUV", "Vans", "Lujo", "Otros" });
+	public static final Map<String, Tarifa> tarifas = new HashMap<String, Tarifa>() {
+		{
+			put("Pequeños", new Tarifa(25000L, 50000L, 25000L));
+			put("SUV", new Tarifa(25000L, 50000L, 25000L));
+			put("Vans", new Tarifa(25000L, 50000L, 25000L));
+			put("Lujo", new Tarifa(25000L, 50000L, 25000L));
+			put("Otros", new Tarifa(25000L, 50000L, 25000L));
+		}
+	};
 	private Map<String, Vehiculo> vehiculos;
 	private Map<String, Reserva> reservas;
 	private Map<String, List<Range<LocalDateTime>>> calendario;
