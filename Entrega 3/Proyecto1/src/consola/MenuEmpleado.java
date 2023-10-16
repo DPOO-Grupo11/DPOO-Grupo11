@@ -42,7 +42,6 @@ public class MenuEmpleado {
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 1) {
 					System.out.println("Para crear un alquiler ingrese la siguiente informacion: ");
-					String idReserva = input("id reserva");
 					String categoriaSolicitada = input("Categoria solicitada");
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 					String recogida = input("Fecha recogida (yyyy-MM-dd HH:mm)");

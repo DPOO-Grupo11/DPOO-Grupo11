@@ -1,12 +1,12 @@
 package consola;
 
-import clases.Admin;
-import clases.SistemaAlquiler;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import clases.*;
 
@@ -37,22 +37,65 @@ public class MenuCliente {
 		while (continuar) {
 			try {
 				if (opcionSeleccionada == 1) {
-					// Todo Call crear reserva
+					// Call crear reserva
+					System.out.println("Para crear una reserva ingrese la siguiente informacion: ");
+					String categoriaSolicitada = input("Categoria solicitada");
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+					String recogida = input("Fecha recogida (yyyy-MM-dd HH:mm)");
+					LocalDateTime fechaRecogida = LocalDateTime.parse(recogida, formatter);
+					String ubicacionRecogida = input("Ubicacion recogida");
+					String ubicacionEntrega = input("Ubicacion entrega");
+					String entregaTemprano = input("fecha entrega por temprano (yyyy-MM-dd HH:mm) (hora militar)");
+					String entregaTarde = input("fecha entrega por tarde (yyyy-MM-dd HH:mm) (hora militar)");
+					LocalDateTime fechaEntregaTemprano = LocalDateTime.parse(entregaTemprano, formatter);
+					LocalDateTime fechaEntregaTarde = LocalDateTime.parse(entregaTarde, formatter);
+					Range<LocalDateTime> rangoEntrega = new Range<LocalDateTime>(fechaEntregaTemprano,
+							fechaEntregaTarde);
+					String usuario = input("Usuario cliente");
+					String contraseñaCliente = input("Contraseña cliente");
+					Cliente cliente = (Cliente) sistemaAlquiler.getUsuario(usuario, contraseñaCliente);
+					while (cliente == null) {
+						System.out.println("El cliente seleccionado no existe, volver a ingresar usuario y contraseña");
+						usuario = input("Usuario cliente");
+						contraseñaCliente = input("Contraseña cliente");
+						cliente = (Cliente) sistemaAlquiler.getUsuario(usuario, contraseñaCliente);
+					}
+					ArrayList<LicenciaDeConduccion> conductoresExtra = new ArrayList<LicenciaDeConduccion>();
+					boolean agregarMas = input("Agregar conductores extra? (si/no)").equals("si");
+					while (agregarMas) {
+						String usuarioConductorExtra = input("Usuario de conductor extra");
+						String claveConductorExtra = input("Contraseña de conductor extra");
+						Cliente conductorExtra = (Cliente) sistemaAlquiler.getUsuario(usuarioConductorExtra,
+								claveConductorExtra);
+						if (conductorExtra != null) {
+							conductoresExtra.add(conductorExtra.getLicenciaDeConduccion());
+						} else {
+							System.out.println("El cliente solicitado no existe");
+						}
+						agregarMas = input("Agregar mas conductores extra? (si/no)").equals("si");
+					}
+					sistemaAlquiler.crearReserva(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
+							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2) {
-					// ToDo call modificar reserva
+					// call modificar reserva
+					System.out.println("Para modificar una reserva ingrese la siguiente informacion: ");
+					String idReserva = input("idReserva");
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+					String recogida = input("Fecha recogida (yyyy-MM-dd HH:mm)");
+					LocalDateTime fechaRecogida = LocalDateTime.parse(recogida, formatter);
+					String entregaTemprano = input("fecha entrega por temprano (yyyy-MM-dd HH:mm) (hora militar)");
+					String entregaTarde = input("fecha entrega por tarde (yyyy-MM-dd HH:mm) (hora militar)");
+					LocalDateTime fechaEntregaTemprano = LocalDateTime.parse(entregaTemprano, formatter);
+					LocalDateTime fechaEntregaTarde = LocalDateTime.parse(entregaTarde, formatter);
+					Range<LocalDateTime> rangoEntrega = new Range<LocalDateTime>(fechaEntregaTemprano,
+							fechaEntregaTarde);
+					sistemaAlquiler.modificarReserva(idReserva, fechaRecogida, rangoEntrega);
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 3) {
 					System.out.println("Cerrando sesión ...");
 					this.clienteActual = null;
 					continuar = false;
-
-				} else if (opcionSeleccionada == 0) {
-					System.out.println("Menú cliente \n");
-
-					System.out.println("1. Crear reserva");
-					System.out.println("2. Modificar reserva");
-					System.out.println("3. Cerrar sesión");
 				} else {
 					System.out.println("Por favor seleccione una opción valida.");
 				}

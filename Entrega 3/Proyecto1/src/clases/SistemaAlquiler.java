@@ -90,7 +90,7 @@ public class SistemaAlquiler {
 			// El admin no existe, agregarlo
 			Admin nuevoAdmin = new Admin(usuario, clave, sede);
 			mapaAdmins.put(usuario, nuevoAdmin);
-			datos.actUsuarios();
+			System.out.println("Admin registrado");
 		} else {
 			// El admin ya existe
 			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
@@ -105,6 +105,7 @@ public class SistemaAlquiler {
 			return;
 		}
 		datos.getEmpleados().put(usuario, empleado);
+		System.out.println("Empleado registrado");
 	}
 
 	public void eliminarEmpleado(String usuario) {
@@ -113,6 +114,7 @@ public class SistemaAlquiler {
 			return;
 		}
 		datos.getEmpleados().remove(usuario);
+		System.out.println("Empleado eliminado");
 	}
 
 	public void registroCliente(String usuario, String clave, String nombres, String numeroTelefono, String direccion,
@@ -128,7 +130,7 @@ public class SistemaAlquiler {
 			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
 					nacionalidad, imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
 			mapaClientes.put(usuario, nuevoCliente);
-			datos.actUsuarios();
+			System.out.println("Cliente registrado");
 		} else {
 			// El cliente ya existe
 			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
@@ -149,6 +151,7 @@ public class SistemaAlquiler {
 				// La sede no existe, agregarla
 				Sede nuevaSede = new Sede(nomSede, ubiSede, hrs, empleados);
 				mapaSedes.put(nomSede, nuevaSede);
+				System.out.println("Nueva sede creada");
 			} else {
 				// La sede ya existe
 				System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
@@ -168,6 +171,7 @@ public class SistemaAlquiler {
 			mapaSedes.remove(actNomSede);
 			sedeActual.setNombre(nuevoNomSede);
 			mapaSedes.put(actNomSede, sedeActual);
+			System.out.println("Nombre sede modificado");
 		} else {
 			System.out.println("La sede ingresada no fue encontrada ");
 		}
@@ -181,6 +185,7 @@ public class SistemaAlquiler {
 			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
 			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
 			sedeActual.setHorariosDeAtencion(hrs);
+			System.out.println("Horarios de atencion establecidos");
 		} else {
 			System.out.println("La sede ingresada no fue encontrada ");
 		}
@@ -197,7 +202,6 @@ public class SistemaAlquiler {
 			return;
 		}
 		System.out.println("Ubicacion vehiculo: " + v.getUbicacion());
-
 	}
 
 	public void consultarHistorialVehiculo(String placa) {
@@ -211,12 +215,38 @@ public class SistemaAlquiler {
 			System.out.println("El vehiculo seleccionado no tiene historial");
 			return;
 		}
+		System.out.println("Historial vehiculo:");
 		for (Reserva r : historial) {
 			System.out.println(String.format("ID reserva: %d, fecha inicio: %s, fecha final: %s", r.getId(),
 					r.getRangoEntrega().getLow().toLocalDate().toString(),
 					r.getFechaRecogida().toLocalDate().toString()));
 		}
 
+	}
+
+	public void crearReserva(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
+			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
+			ArrayList<LicenciaDeConduccion> conductoresExtra) {
+		Tarifa tarifa = Inventario.tarifas.get(categoriaSolicitada);
+		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
+				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
+		datos.getReservas().put(r.getId(), r);
+		System.out.println("Reserva creada");
+	}
+
+	public void modificarReserva(String idReserva, LocalDateTime fechaRecogida, Range<LocalDateTime> rangoEntrega) {
+		if (!datos.getReservas().containsKey(idReserva)) {
+			System.out.println("La reserva seleccionada no existe");
+			return;
+		}
+		Reserva r = datos.getReservas().get(idReserva);
+		if (r.getVehiculo() != null) {
+			System.out.println("Esta reserva ya es un alquiler en curso, no se puede modificar");
+			return;
+		}
+		r.setFechaRecogida(fechaRecogida);
+		r.setRangoEntrega(rangoEntrega);
+		System.out.println("Los cambios fueron realizados");
 	}
 
 	public void crearAlquiler(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
@@ -228,6 +258,7 @@ public class SistemaAlquiler {
 				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
 		datos.getReservas().put(r.getId(), r);
 		formalizarAlquiler(r.getId());
+		System.out.println("Alquiler creado");
 	}
 
 	public void formalizarAlquiler(String idReserva) {
@@ -261,5 +292,4 @@ public class SistemaAlquiler {
 			categoria = Inventario.prioridadCategoria.get(i);
 		}
 	}
-
 }
