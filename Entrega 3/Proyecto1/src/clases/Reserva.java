@@ -9,6 +9,7 @@ public class Reserva implements Serializable {
 	/*
 	 * 
 	 */
+	private int id;
 	private String categoriaSolicitada;
 	private LocalDateTime fechaRecogida;
 	private String ubicacionRecogida;
@@ -19,9 +20,10 @@ public class Reserva implements Serializable {
 	private ArrayList<LicenciaDeConduccion> conductoresExtra;
 	private Tarifa tarifa;
 
-	public Reserva(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
+	public Reserva(int id, String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
 			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente, Vehiculo vehiculo,
 			ArrayList<LicenciaDeConduccion> conductoresExtra, Tarifa tarifa) {
+		this.id = id;
 		this.categoriaSolicitada = categoriaSolicitada;
 		this.fechaRecogida = fechaRecogida;
 		this.ubicacionRecogida = ubicacionRecogida;
@@ -35,19 +37,24 @@ public class Reserva implements Serializable {
 
 	/**
 	 * Calcula costo de reserva / alquiler
+	 * 
 	 * @return costo de reserva / alquiler
 	 */
 	public Double calcularCosto() {
 		Double costoSedeDiferente = (double) (ubicacionEntrega.equals(ubicacionRecogida) ? 0D
 				: tarifa.getPrecioSedeDiferente());
 		Double costoConductoresExtra = (double) (tarifa.getPrecioConductorExtra() * conductoresExtra.size());
-		
+
 		return tarifa.getPrecioCategoria() + costoSedeDiferente + costoConductoresExtra;
 	}
 
 	/*
 	 * getters
 	 */
+	public int getId() {
+		return id;
+	}
+
 	public String getCategoriaSolicitada() {
 		return categoriaSolicitada;
 	}
@@ -87,6 +94,10 @@ public class Reserva implements Serializable {
 	/*
 	 * setters
 	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setCategoriaSolicitada(String categoriaSolicitada) {
 		this.categoriaSolicitada = categoriaSolicitada;
 	}

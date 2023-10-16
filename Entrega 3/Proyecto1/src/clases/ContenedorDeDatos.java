@@ -24,19 +24,24 @@ public class ContenedorDeDatos implements Serializable {
 	private Map<String, Empleado> empleados;
 	private Map<String, Usuario> usuarios;
 	private Admin adminGeneral;
+	/*
+	 * 
+	 */
+	// se utiliza como id para las reservas
+	private int contadorReservas = 0;
 
 	public ContenedorDeDatos() {
-		this. usuario = null;
-		this. adminGeneral = new Admin("AdministradorGen", "SenecaDPOO");
-		this.  inventario = new Inventario();
-		this.  clientes = new HashMap<String, Cliente>();
-		this.  admins = new HashMap<String, Admin>();
-		this. seguros = new ArrayList<Seguro>();
-		this. sedes = new HashMap<String, Sede>();
-		this.  vehiculos = new HashMap<String, Vehiculo>();
-		this.  reservas = new HashMap<String, Reserva>();
-		this.  empleados = new HashMap<String, Empleado>();
-		this. usuarios = new HashMap<String, Usuario>();
+		this.usuario = null;
+		this.adminGeneral = new Admin("AdministradorGen", "SenecaDPOO");
+		this.inventario = new Inventario();
+		this.clientes = new HashMap<String, Cliente>();
+		this.admins = new HashMap<String, Admin>();
+		this.seguros = new ArrayList<Seguro>();
+		this.sedes = new HashMap<String, Sede>();
+		this.vehiculos = new HashMap<String, Vehiculo>();
+		this.reservas = new HashMap<String, Reserva>();
+		this.empleados = new HashMap<String, Empleado>();
+		this.usuarios = new HashMap<String, Usuario>();
 		setUsuarios(empleados, admins, clientes);
 		this.usuarios.put(adminGeneral.getNombreUsuario(), adminGeneral);
 	}
@@ -44,26 +49,27 @@ public class ContenedorDeDatos implements Serializable {
 	/*
 	 * getters
 	 */
+	public int getContadorReservas() {
+		return contadorReservas;
+	}
+
 	public Usuario getUsuarioActual() {
 		return usuario;
 	}
-	
+
 	public Admin getAdminGen() {
 		return adminGeneral;
 	}
-	public Usuario getUsuario(String usuario, String clave)
-	{	
+
+	public Usuario getUsuario(String usuario, String clave) {
 		Usuario usuarioInteres = this.usuarios.get(usuario);
-		if (clave.equals(usuarioInteres.getContraseña())) 
-		{
+		if (clave.equals(usuarioInteres.getContraseña())) {
 			return usuarioInteres;
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 	}
-	
+
 	public Map<String, Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -103,6 +109,10 @@ public class ContenedorDeDatos implements Serializable {
 	/*
 	 * setters
 	 */
+	public void incrementarContadorReservas(int contadorReservas) {
+		this.contadorReservas += 1;
+	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
@@ -138,17 +148,16 @@ public class ContenedorDeDatos implements Serializable {
 	public void setEmpleados(Map<String, Empleado> empleados) {
 		this.empleados = empleados;
 	}
-	
+
 	public void setUsuarios(Map<String, Empleado> empleados, Map<String, Admin> admins, Map<String, Cliente> clientes) {
 		this.usuarios.putAll(empleados);
 		this.usuarios.putAll(admins);
 		this.usuarios.putAll(clientes);
 	}
-	
-	//actualiza el mapa de usuarios. 
+
+	// actualiza el mapa de usuarios.
 	public void actUsuarios() {
 		setUsuarios(this.empleados, this.admins, this.clientes);
 	}
-	
-	
+
 }
