@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -216,6 +217,48 @@ public class SistemaAlquiler {
 					r.getFechaRecogida().toLocalDate().toString()));
 		}
 
+	}
+
+	public void crearAlquiler(String categoriaSolicitada, LocalDateTime fechaRecogida,
+			String ubicacionRecogida, String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
+			Vehiculo vehiculo, ArrayList<LicenciaDeConduccion> conductoresExtra, Tarifa tarifa) {
+
+		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
+				ubicacionEntrega, rangoEntrega, cliente, vehiculo, conductoresExtra, tarifa);
+		datos.getReservas().put(idReserva, r);
+		formalizarAlquiler(idReserva);
+	}
+
+	public void formalizarAlquiler(String idReserva) {
+		if (!datos.getReservas().containsKey(idReserva)) {
+			System.out.println("La reserva seleccionada no existe");
+			return;
+		}
+		Reserva r = datos.getReservas().get(idReserva);
+		// encontrar vehiculo disponible
+		String categoria = r.getCategoriaSolicitada();
+		Vehiculo vehiculoEncontrado;
+		while (vehiculoEncontrado == null) {
+			for (Vehiculo v : datos.getVehiculos().values()) {
+				if (v.getCategoria() == categoria
+						&& (v.getFechaDisponible().compareTo(r.getRangoEntrega().getLow()) <= 0)) {
+					// actualizar vehiculo
+					v.setSede(null);
+					v.setEstado("alquilado");
+					v.setFechaDisponible(r.getFechaRecogida());
+					r.setVehiculo(v);
+					System.out.println("Alquiler formalizado, se asigno un vehiculo");
+					return;
+				}
+			}
+			int i = Inventario.prioridadCategoria.indexOf(categoria);
+			i += 1;
+			if (i >= Inventario.prioridadCategoria.size()) {
+				System.out.println("No existen vehiculos disponibles en este momento");
+				return;
+			}
+			categoria = Inventario.prioridadCategoria.get(i);
+		}
 	}
 
 }

@@ -19,10 +19,12 @@ public class ContenedorDeDatos implements Serializable {
 	private Map<String, Admin> admins;
 	private ArrayList<Seguro> seguros;
 	private Map<String, Sede> sedes;
+	// llave es placa
 	private Map<String, Vehiculo> vehiculos;
+	// llave es id reserva
 	private Map<String, Reserva> reservas;
+	// llave es usuario
 	private Map<String, Empleado> empleados;
-	private Map<String, Usuario> usuarios;
 	private Admin adminGeneral;
 	/*
 	 * 
@@ -41,17 +43,18 @@ public class ContenedorDeDatos implements Serializable {
 		this.vehiculos = new HashMap<String, Vehiculo>();
 		this.reservas = new HashMap<String, Reserva>();
 		this.empleados = new HashMap<String, Empleado>();
-		this.usuarios = new HashMap<String, Usuario>();
-		setUsuarios(empleados, admins, clientes);
-		this.usuarios.put(adminGeneral.getNombreUsuario(), adminGeneral);
+		this.admins.put(adminGeneral.getNombreUsuario(), adminGeneral);
+	}
+
+	public String nuevoIdReservas() {
+		String nuevoId = String.valueOf(this.contadorReservas);
+		this.contadorReservas += 1;
+		return nuevoId;
 	}
 
 	/*
 	 * getters
 	 */
-	public int getContadorReservas() {
-		return contadorReservas;
-	}
 
 	public Usuario getUsuarioActual() {
 		return usuario;
@@ -62,7 +65,7 @@ public class ContenedorDeDatos implements Serializable {
 	}
 
 	public Usuario getUsuario(String usuario, String clave) {
-		Usuario usuarioInteres = this.usuarios.get(usuario);
+		Usuario usuarioInteres = getUsuarios().get(usuario);
 		if (clave.equals(usuarioInteres.getContraseña())) {
 			return usuarioInteres;
 		} else {
@@ -71,6 +74,10 @@ public class ContenedorDeDatos implements Serializable {
 	}
 
 	public Map<String, Usuario> getUsuarios() {
+		Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
+		usuarios.putAll(admins);
+		usuarios.putAll(empleados);
+		usuarios.putAll(clientes);
 		return usuarios;
 	}
 
@@ -109,9 +116,6 @@ public class ContenedorDeDatos implements Serializable {
 	/*
 	 * setters
 	 */
-	public void incrementarContadorReservas(int contadorReservas) {
-		this.contadorReservas += 1;
-	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
@@ -147,17 +151,6 @@ public class ContenedorDeDatos implements Serializable {
 
 	public void setEmpleados(Map<String, Empleado> empleados) {
 		this.empleados = empleados;
-	}
-
-	public void setUsuarios(Map<String, Empleado> empleados, Map<String, Admin> admins, Map<String, Cliente> clientes) {
-		this.usuarios.putAll(empleados);
-		this.usuarios.putAll(admins);
-		this.usuarios.putAll(clientes);
-	}
-
-	// actualiza el mapa de usuarios.
-	public void actUsuarios() {
-		setUsuarios(this.empleados, this.admins, this.clientes);
 	}
 
 }

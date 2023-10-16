@@ -9,7 +9,7 @@ public class Reserva implements Serializable {
 	/*
 	 * 
 	 */
-	private int id;
+	private String id;
 	private String categoriaSolicitada;
 	private LocalDateTime fechaRecogida;
 	private String ubicacionRecogida;
@@ -20,7 +20,7 @@ public class Reserva implements Serializable {
 	private ArrayList<LicenciaDeConduccion> conductoresExtra;
 	private Tarifa tarifa;
 
-	public Reserva(int id, String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
+	public Reserva(String id, String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
 			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente, Vehiculo vehiculo,
 			ArrayList<LicenciaDeConduccion> conductoresExtra, Tarifa tarifa) {
 		this.id = id;
@@ -51,7 +51,7 @@ public class Reserva implements Serializable {
 	/*
 	 * getters
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -94,7 +94,7 @@ public class Reserva implements Serializable {
 	/*
 	 * setters
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
