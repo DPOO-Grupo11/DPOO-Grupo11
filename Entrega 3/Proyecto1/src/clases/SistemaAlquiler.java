@@ -9,14 +9,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
+	
+	
 	// toca pedir archivo de persistencia cada vez que se inicie programa
 	private static final String dirDatos = System.getProperty("user.dir");;
 
-	public SistemaAlquiler() throws FileNotFoundException, IOException {
-		System.out.println("hola");
+	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
+		System.out.println("pass");
+		cargarDatos();
 	}
 
 	/*
@@ -66,4 +71,65 @@ public class SistemaAlquiler {
 			outputStream.write(bytes);
 		}
 	}
+	
+	
+	
+	public Usuario getUsuario(String usuario, String clave)
+	{
+		Usuario usuarioInteres = datos.getUsuario(usuario, clave);
+		return usuarioInteres;
+	}
+	
+	public ArrayList<Sede> getSedes()
+	{
+		ArrayList<Sede> listaSedes = datos.getSedes();
+		return listaSedes;
+	}
+	
+	public void registroAdmin(String usuario, String clave, String sede) 
+	{
+		Map<String, Admin> mapaAdmins = datos.getAdmins();
+		if (!mapaAdmins.containsKey(usuario)) 
+		{
+            // El admin no existe, agregarlo
+			Admin nuevoAdmin = new Admin(usuario, clave, sede);
+			mapaAdmins.put(usuario, nuevoAdmin);
+			datos.actUsuarios();
+        } 
+		else
+        {
+            // El admin ya existe
+            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+        }
+		
+	}
+	
+	public void registroCliente(String usuario, String clave, String nombres, String numeroTelefono, String direccion,
+			String fechaNacimiento, String nacionalidad, String imagenDocumentoIdentidad,
+			String numeroLicencia, String paisExpedicion, String fechaVencimientoLicencia, String imagen, String numeroTarjeta, String fechaVencimientoTarjeta, String cvv) 
+	{
+		Map<String, Cliente> mapaClientes = datos.getClientes();
+		if (!mapaClientes.containsKey(usuario)) 
+		{
+            // El cliente no existe, agregarlo
+			LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion, fechaVencimientoLicencia, imagen);
+			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito( numeroTarjeta, fechaVencimientoTarjeta, cvv);
+			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento, nacionalidad, 
+					imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
+			mapaClientes.put(usuario, nuevoCliente);
+			datos.actUsuarios();
+        } 
+		else
+        {
+            // El cliente ya existe
+            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+        }
+		
+	}
+	
+	
+	
+
+	
 }
+	

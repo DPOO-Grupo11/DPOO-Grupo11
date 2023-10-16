@@ -11,11 +11,11 @@ public abstract class Usuario implements Serializable {
 	protected String contraseña;
 	protected String tipo;
 
-	public Usuario(String usuario, String contraseña, String tipo){
-		this.usuario = usuario;
-		this.contraseña = contraseña;
-		this.tipo = tipo;
-	}
+		public Usuario(String usuario, String contraseña, String tipo){
+			this.usuario = usuario;
+			this.contraseña = contraseña;
+			this.tipo = tipo;
+		}
 
 
 	/*

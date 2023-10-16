@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-class Sede implements Serializable {
+public class Sede implements Serializable {
 	private static final long serialVersionUID = -7007424474250561109L;
 	/**
 	 * 

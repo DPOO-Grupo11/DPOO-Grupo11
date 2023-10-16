@@ -7,7 +7,7 @@ public class LicenciaDeConduccion implements Serializable {
 	/**
 	 * 
 	 */
-	private int numero;
+	private String numero;
 	private String paisExpedicion;
 	private String fechaVencimiento;
 	private String imagen;
@@ -20,14 +20,14 @@ public class LicenciaDeConduccion implements Serializable {
 	 * @param imagen path a archivo
 	 */
 	
-	public LicenciaDeConduccion(int numero, String paisExpedicion, String fechaVencimiento, String imagen) {
+	public LicenciaDeConduccion(String numero, String paisExpedicion, String fechaVencimiento, String imagen) {
 		this.numero = numero;
 		this.paisExpedicion = paisExpedicion;
 		this.fechaVencimiento = fechaVencimiento;
 		this.imagen = imagen;
 	}
 	
-	public int getNumero() {
+	public String getNumero() {
 		return this.numero;
 	}
 	

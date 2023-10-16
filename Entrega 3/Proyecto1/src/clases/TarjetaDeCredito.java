@@ -7,11 +7,11 @@ public class TarjetaDeCredito implements Serializable {
 	/**
 	 * 
 	 */
-	private int numero;
+	private String numero;
 	private String fechaVencimiento;
-	private int cvv;
+	private String cvv;
 
-	public TarjetaDeCredito(int numero, String fechaVencimiento, int cvv) {
+	public TarjetaDeCredito(String numero, String fechaVencimiento, String cvv) {
 		this.numero = numero;
 		this.fechaVencimiento = fechaVencimiento;
 		this.cvv = cvv;
@@ -21,7 +21,7 @@ public class TarjetaDeCredito implements Serializable {
 	 * getters
 	 */
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
@@ -29,7 +29,7 @@ public class TarjetaDeCredito implements Serializable {
 		return fechaVencimiento;
 	}
 
-	public int getCvv() {
+	public String getCvv() {
 		return cvv;
 	}
 
@@ -37,7 +37,7 @@ public class TarjetaDeCredito implements Serializable {
 	 * setters
 	 */
 
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
@@ -45,7 +45,7 @@ public class TarjetaDeCredito implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public void setCvv(int cvv) {
+	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
 }
