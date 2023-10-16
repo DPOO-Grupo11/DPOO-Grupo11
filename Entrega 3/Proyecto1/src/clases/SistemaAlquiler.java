@@ -1,11 +1,13 @@
 package clases;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
@@ -19,8 +21,8 @@ public class SistemaAlquiler {
 	// toca pedir archivo de persistencia cada vez que se inicie programa
 	private static final String dirDatos = System.getProperty("user.dir");;
 
-	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
-		System.out.println("pass");
+	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException 
+	{
 		cargarDatos();
 	}
 
@@ -82,7 +84,8 @@ public class SistemaAlquiler {
 	
 	public ArrayList<Sede> getSedes()
 	{
-		ArrayList<Sede> listaSedes = datos.getSedes();
+		Map<String, Sede> mapaSedes = datos.getSedes();
+		ArrayList<Sede> listaSedes = (ArrayList<Sede>) mapaSedes.values();
 		return listaSedes;
 	}
 	
@@ -126,7 +129,73 @@ public class SistemaAlquiler {
         }
 		
 	}
-	
+
+	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede)
+	{
+		try 
+		{
+			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
+			
+			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
+						
+			ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+			
+			Map<String, Sede> mapaSedes = datos.getSedes();
+			if (!mapaSedes.containsKey(nomSede)) 
+			{
+	            // La sede no existe, agregarla
+				Sede nuevaSede = new Sede(nomSede, ubiSede, hrs, empleados);
+				mapaSedes.put(nomSede, nuevaSede);
+	        } 
+			else
+	        {
+				// La sede ya existe 
+	            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+	        }
+			
+		}
+		catch (IllegalArgumentException e) 
+		{
+            System.out.println("Rango no válido: " + e.getMessage());
+        }	
+		
+	}
+
+
+	public void modificarNombreSede(String nuevoNomSede, String actNomSede) 
+	{
+		Map<String, Sede> mapaSedes = datos.getSedes();
+		if (mapaSedes.containsKey(actNomSede)) 
+		{
+			Sede sedeActual = mapaSedes.get(actNomSede);
+			
+			mapaSedes.remove(actNomSede);
+			sedeActual.setNombre(nuevoNomSede);
+			mapaSedes.put(actNomSede, sedeActual);
+        } 
+		else
+        {
+            System.out.println("La sede ingresada no fue encontrada ");
+        }
+		
+	}
+
+	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede)
+	{
+		Map<String, Sede> mapaSedes = datos.getSedes();
+		if (mapaSedes.containsKey(nomSede)) 
+		{
+			Sede sedeActual = mapaSedes.get(nomSede);
+			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
+			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
+			sedeActual.setHorariosDeAtencion(hrs);
+        } 
+		else
+        {
+            System.out.println("La sede ingresada no fue encontrada ");
+        }
+	}
+
 	
 	
 

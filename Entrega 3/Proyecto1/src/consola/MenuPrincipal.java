@@ -44,9 +44,10 @@ public class MenuPrincipal {
 					String rolUsuario = usuarioActual.getTipo();
 					 if (rolUsuario.equals("Administrador"))
 					{
+						Admin adminActual = (Admin)usuarioActual;
 						System.out.println("Inicio de sesión como administrador exitoso");
-					//	MenuAdmin menuAdmin = new MenuAdmin();
-					//	menuAdmin.mostrarMenu();
+						MenuAdmin menuAdmin = new MenuAdmin(sistemaAlquiler, adminActual);
+						menuAdmin.mostrarMenu();
 					}
 					else if (rolUsuario.equals("Empleado"))
 					{
@@ -62,7 +63,7 @@ public class MenuPrincipal {
 					}
 					else
 					{
-						System.out.println("el usuario solicitado no fue encontrado");
+						System.out.println("error con los credenciales");
 					}
 					opcionSeleccionada=0;
 				}

@@ -18,7 +18,7 @@ public class ContenedorDeDatos implements Serializable {
 	private Map<String, Cliente> clientes;
 	private Map<String, Admin> admins;
 	private ArrayList<Seguro> seguros;
-	private ArrayList<Sede> sedes;
+	private Map<String, Sede> sedes;
 	private Map<String, Vehiculo> vehiculos;
 	private Map<String, Reserva> reservas;
 	private Map<String, Empleado> empleados;
@@ -32,7 +32,7 @@ public class ContenedorDeDatos implements Serializable {
 		this.  clientes = new HashMap<String, Cliente>();
 		this.  admins = new HashMap<String, Admin>();
 		this. seguros = new ArrayList<Seguro>();
-		this. sedes = new ArrayList<Sede>();
+		this. sedes = new HashMap<String, Sede>();
 		this.  vehiculos = new HashMap<String, Vehiculo>();
 		this.  reservas = new HashMap<String, Reserva>();
 		this.  empleados = new HashMap<String, Empleado>();
@@ -84,7 +84,7 @@ public class ContenedorDeDatos implements Serializable {
 		return seguros;
 	}
 
-	public ArrayList<Sede> getSedes() {
+	public Map<String, Sede> getSedes() {
 		return sedes;
 	}
 
@@ -123,7 +123,7 @@ public class ContenedorDeDatos implements Serializable {
 		this.seguros = seguros;
 	}
 
-	public void setSedes(ArrayList<Sede> sedes) {
+	public void setSedes(Map<String, Sede> sedes) {
 		this.sedes = sedes;
 	}
 

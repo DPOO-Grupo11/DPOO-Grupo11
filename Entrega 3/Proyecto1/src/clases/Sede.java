@@ -11,10 +11,10 @@ public class Sede implements Serializable {
 	 */
 	private String nombre;
 	private String ubicacion;
-	private ArrayList<HorarioDeAtencion> horariosDeAtencion;
+	private HorarioDeAtencion horariosDeAtencion;
 	private ArrayList<Empleado> empleados;
 
-	public Sede(String nombre, String ubicacion, ArrayList<HorarioDeAtencion> horariosDeAtencion,
+	public Sede(String nombre, String ubicacion, HorarioDeAtencion horariosDeAtencion,
 			ArrayList<Empleado> empleados) {
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
@@ -30,7 +30,7 @@ public class Sede implements Serializable {
 		this.ubicacion = ubicacion;
 	}
 
-	public void setHorariosDeAtencion(ArrayList<HorarioDeAtencion> horariosDeAtencion) {
+	public void setHorariosDeAtencion(HorarioDeAtencion horariosDeAtencion) {
 		this.horariosDeAtencion = horariosDeAtencion;
 	}
 
@@ -54,7 +54,7 @@ public class Sede implements Serializable {
 		return this.ubicacion;
 	}
 
-	public ArrayList<HorarioDeAtencion> getHorariosDeAtencion() {
+	public HorarioDeAtencion getHorariosDeAtencion() {
 		return this.horariosDeAtencion;
 	}
 
