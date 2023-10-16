@@ -16,13 +16,11 @@ import java.util.Map;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
-	
-	
+
 	// toca pedir archivo de persistencia cada vez que se inicie programa
 	private static final String dirDatos = System.getProperty("user.dir");;
 
-	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException 
-	{
+	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
 		cargarDatos();
 	}
 
@@ -73,132 +71,151 @@ public class SistemaAlquiler {
 			outputStream.write(bytes);
 		}
 	}
-	
-	
-	
-	public Usuario getUsuario(String usuario, String clave)
-	{
+
+	public Usuario getUsuario(String usuario, String clave) {
 		Usuario usuarioInteres = datos.getUsuario(usuario, clave);
 		return usuarioInteres;
 	}
-	
-	public ArrayList<Sede> getSedes()
-	{
+
+	public ArrayList<Sede> getSedes() {
 		Map<String, Sede> mapaSedes = datos.getSedes();
 		ArrayList<Sede> listaSedes = (ArrayList<Sede>) mapaSedes.values();
 		return listaSedes;
 	}
-	
-	public void registroAdmin(String usuario, String clave, String sede) 
-	{
+
+	public void registroAdmin(String usuario, String clave, String sede) {
 		Map<String, Admin> mapaAdmins = datos.getAdmins();
-		if (!mapaAdmins.containsKey(usuario)) 
-		{
-            // El admin no existe, agregarlo
+		if (!mapaAdmins.containsKey(usuario)) {
+			// El admin no existe, agregarlo
 			Admin nuevoAdmin = new Admin(usuario, clave, sede);
 			mapaAdmins.put(usuario, nuevoAdmin);
 			datos.actUsuarios();
-        } 
-		else
-        {
-            // El admin ya existe
-            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
-        }
-		
+		} else {
+			// El admin ya existe
+			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+		}
+
 	}
-	
+
+	public void registroEmpleado(String usuario, String clave, String rol) {
+		Empleado empleado = new Empleado(usuario, clave, rol);
+		if (datos.getEmpleados().containsKey(usuario)) {
+			System.out.println("ya existe un usuario con este nombre, intente con otro");
+			return;
+		}
+		datos.getEmpleados().put(usuario, empleado);
+	}
+
+	public void eliminarEmpleado(String usuario) {
+		if (!datos.getEmpleados().containsKey(usuario)) {
+			System.out.println("el usuario seleccionado no existe");
+			return;
+		}
+		datos.getEmpleados().remove(usuario);
+	}
+
 	public void registroCliente(String usuario, String clave, String nombres, String numeroTelefono, String direccion,
-			String fechaNacimiento, String nacionalidad, String imagenDocumentoIdentidad,
-			String numeroLicencia, String paisExpedicion, String fechaVencimientoLicencia, String imagen, String numeroTarjeta, String fechaVencimientoTarjeta, String cvv) 
-	{
+			String fechaNacimiento, String nacionalidad, String imagenDocumentoIdentidad, String numeroLicencia,
+			String paisExpedicion, String fechaVencimientoLicencia, String imagen, String numeroTarjeta,
+			String fechaVencimientoTarjeta, String cvv) {
 		Map<String, Cliente> mapaClientes = datos.getClientes();
-		if (!mapaClientes.containsKey(usuario)) 
-		{
-            // El cliente no existe, agregarlo
-			LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion, fechaVencimientoLicencia, imagen);
-			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito( numeroTarjeta, fechaVencimientoTarjeta, cvv);
-			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento, nacionalidad, 
-					imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
+		if (!mapaClientes.containsKey(usuario)) {
+			// El cliente no existe, agregarlo
+			LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion,
+					fechaVencimientoLicencia, imagen);
+			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(numeroTarjeta, fechaVencimientoTarjeta, cvv);
+			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
+					nacionalidad, imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
 			mapaClientes.put(usuario, nuevoCliente);
 			datos.actUsuarios();
-        } 
-		else
-        {
-            // El cliente ya existe
-            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
-        }
-		
+		} else {
+			// El cliente ya existe
+			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+		}
+
 	}
 
-	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede)
-	{
-		try 
-		{
+	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede) {
+		try {
 			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
-			
+
 			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
-						
+
 			ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-			
+
 			Map<String, Sede> mapaSedes = datos.getSedes();
-			if (!mapaSedes.containsKey(nomSede)) 
-			{
-	            // La sede no existe, agregarla
+			if (!mapaSedes.containsKey(nomSede)) {
+				// La sede no existe, agregarla
 				Sede nuevaSede = new Sede(nomSede, ubiSede, hrs, empleados);
 				mapaSedes.put(nomSede, nuevaSede);
-	        } 
-			else
-	        {
-				// La sede ya existe 
-	            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
-	        }
-			
+			} else {
+				// La sede ya existe
+				System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+			}
+
+		} catch (IllegalArgumentException e) {
+			System.out.println("Rango no válido: " + e.getMessage());
 		}
-		catch (IllegalArgumentException e) 
-		{
-            System.out.println("Rango no válido: " + e.getMessage());
-        }	
-		
+
 	}
 
-
-	public void modificarNombreSede(String nuevoNomSede, String actNomSede) 
-	{
+	public void modificarNombreSede(String nuevoNomSede, String actNomSede) {
 		Map<String, Sede> mapaSedes = datos.getSedes();
-		if (mapaSedes.containsKey(actNomSede)) 
-		{
+		if (mapaSedes.containsKey(actNomSede)) {
 			Sede sedeActual = mapaSedes.get(actNomSede);
-			
+
 			mapaSedes.remove(actNomSede);
 			sedeActual.setNombre(nuevoNomSede);
 			mapaSedes.put(actNomSede, sedeActual);
-        } 
-		else
-        {
-            System.out.println("La sede ingresada no fue encontrada ");
-        }
-		
+		} else {
+			System.out.println("La sede ingresada no fue encontrada ");
+		}
+
 	}
 
-	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede)
-	{
+	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede) {
 		Map<String, Sede> mapaSedes = datos.getSedes();
-		if (mapaSedes.containsKey(nomSede)) 
-		{
+		if (mapaSedes.containsKey(nomSede)) {
 			Sede sedeActual = mapaSedes.get(nomSede);
 			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
 			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
 			sedeActual.setHorariosDeAtencion(hrs);
-        } 
-		else
-        {
-            System.out.println("La sede ingresada no fue encontrada ");
-        }
+		} else {
+			System.out.println("La sede ingresada no fue encontrada ");
+		}
 	}
 
-	
-	
+	public void consultarUbicacionVehiculo(String placa) {
+		if (!datos.getVehiculos().containsKey(placa)) {
+			System.out.println("El vehiculo seleccionado no existe");
+			return;
+		}
+		Vehiculo v = datos.getVehiculos().get(placa);
+		if (v.getUbicacion() == null) {
+			System.out.println("El vehiculo esta actualmente alquilado");
+			return;
+		}
+		System.out.println("Ubicacion vehiculo: " + v.getUbicacion());
 
-	
+	}
+
+	public void consultarHistorialVehiculo(String placa) {
+		if (!datos.getVehiculos().containsKey(placa)) {
+			System.out.println("El vehiculo seleccionado no existe");
+			return;
+		}
+		Vehiculo v = datos.getVehiculos().get(placa);
+		ArrayList<Reserva> historial = v.getHistorial();
+		if (historial.isEmpty()) {
+			System.out.println("El vehiculo seleccionado no tiene historial");
+			return;
+		}
+		for (Reserva r : historial) {
+			System.out.println(String.format("ID reserva: %d, fecha inicio: %s, fecha final: %s", r.getId(),
+					r.getRangoEntrega().getLow().toLocalDate().toString(),
+					r.getFechaRecogida().toLocalDate().toString()));
+		}
+
+	}
+
 }
-	

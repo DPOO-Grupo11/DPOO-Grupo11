@@ -34,4 +34,12 @@ public class Range<T extends Comparable<? super T>> implements Serializable {
         // Límite superior (exclusivo) del intervalo [0, 24)
         return (T) Integer.valueOf(24);
     }
+    
+    public T getLow() {
+		return low;
+	}
+    
+    public T getHigh() {
+		return high;
+	}
 }

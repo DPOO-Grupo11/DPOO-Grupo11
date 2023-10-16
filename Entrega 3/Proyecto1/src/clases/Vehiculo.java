@@ -20,10 +20,11 @@ class Vehiculo implements Serializable {
 	private String comentarios;
 	//
 	private String estado;
+	private ArrayList<Reserva> historial;
 
 	public Vehiculo(String placa, String marca, String color, String transmision, String categoria,
 			ArrayList<LicenciaDeConduccion> conductores, String sede, String ubicacion, LocalDateTime fechaDisponible,
-			String comentarios, String estado) {
+			String comentarios, String estado, ArrayList<Reserva> historial) {
 		this.placa = placa;
 		this.marca = marca;
 		this.color = color;
@@ -35,6 +36,7 @@ class Vehiculo implements Serializable {
 		this.fechaDisponible = fechaDisponible;
 		this.comentarios = comentarios;
 		this.estado = estado;
+		this.historial = historial;
 	}
 
 	/*
@@ -84,6 +86,10 @@ class Vehiculo implements Serializable {
 	public String getEstado() {
 		return estado;
 	}
+	
+	public ArrayList<Reserva> getHistorial() {
+		return historial;
+	}
 
 	/*
 	 * setters
@@ -131,6 +137,9 @@ class Vehiculo implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	public void setHistorial(ArrayList<Reserva> historial) {
+		this.historial = historial;
 	}
 
 }
