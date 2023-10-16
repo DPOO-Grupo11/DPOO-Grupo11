@@ -4,14 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import clases.*;
 
 public class MenuPrincipal {
 	
-	public void mostrarMenu() throws FileNotFoundException, IOException 
+	public void mostrarMenu() throws FileNotFoundException, IOException, ClassNotFoundException 
 	{
 		
 		System.out.println("\n Bienvenido al sistema de alquiler de vehiculos \n");
@@ -19,7 +18,7 @@ public class MenuPrincipal {
 		System.out.println("Menú principal \n");
 		
 		System.out.println("1. iniciar sesión");
-		System.out.println("2. Registrar cliente nuevo");
+		System.out.println("2. Registrar usuario nuevo");
 		System.out.println("3. Salir de la aplicacion");
 		
 		int opcionSeleccionada = Integer.parseInt(input("Por favor seleccione una opcion"));
@@ -27,7 +26,7 @@ public class MenuPrincipal {
 		
 	}
 	
-	public void ejecutarOpcion(int opcionSeleccionada) throws FileNotFoundException, IOException 
+	public void ejecutarOpcion(int opcionSeleccionada) throws FileNotFoundException, IOException, ClassNotFoundException 
 	{
 		SistemaAlquiler sistemaAlquiler = new SistemaAlquiler();
 		boolean continuar = true;
@@ -39,15 +38,38 @@ public class MenuPrincipal {
 				{
 					
 					System.out.println("Para iniciar sesion debe ingresar sus credenciales");
-					String usuario = input("Usuario: ");
-					String contraseña = input("Contraseña: ");
-					//Usuario usuarioActual = SistemaAlquiler.getUsuario(usuario, contraseña); 
+					String usuario = input("Usuario");
+					String clave = input("Clave");
+					Usuario usuarioActual = sistemaAlquiler.getUsuario(usuario, clave); 
+					String rolUsuario = usuarioActual.getTipo();
+					 if (rolUsuario.equals("Administrador"))
+					{
+						System.out.println("Inicio de sesión como Admin exitoso");
+					//	MenuAdmin menuAdmin = new MenuAdmin();
+					//	menuAdmin.mostrarMenu();
+					}
+					else if (rolUsuario.equals("Empleado"))
+					{
+						System.out.println("Inicio de sesión como Empleado exitoso");
+					//	MenuEmpleado menuEmpleado = new MenuEmpleado();
+					//  MenuEmpleado.mostrarMenu();
+					}
+					else if (rolUsuario.equals("Cliente"))
+					{
+						System.out.println("Inicio de sesión como Empleado exitoso");
+					//  MenuCliente menuAdmin = new MenuCliente();
+					//  menuCliente.mostrarMenu();
+					}
+					else
+					{
+						System.out.println("el usuario solicitado no fue encontrado");
+					}
 					opcionSeleccionada=0;
 				}
 				else if (opcionSeleccionada == 2 && sistemaAlquiler != null) 
 				{
-					//ejecutarOpcion2();
-					//ToDo: Crear menu registro 
+					MenuRegistro menuRegistro = new MenuRegistro(sistemaAlquiler);
+					menuRegistro.mostrarMenu();
 					
 			        opcionSeleccionada=0;
 			    }
@@ -68,7 +90,7 @@ public class MenuPrincipal {
 					System.out.println("Menú principal \n");
 					
 					System.out.println("1. iniciar sesión");
-					System.out.println("2. Registrar cliente nuevo");
+					System.out.println("2. Registrar usuario nuevo");
 					System.out.println("3. Salir de la aplicacion");
 					opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
 				}
@@ -83,6 +105,12 @@ public class MenuPrincipal {
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
 	
 	public String input(String mensaje)
 	{
@@ -100,7 +128,7 @@ public class MenuPrincipal {
 		return null;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException, IOException
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException
 	{
 		MenuPrincipal menuprincipal = new MenuPrincipal();
 		menuprincipal.mostrarMenu();
