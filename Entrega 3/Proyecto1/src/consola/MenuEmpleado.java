@@ -64,8 +64,19 @@ public class MenuEmpleado {
 						contraseñaCliente = input("Contraseña cliente");
 						cliente = (Cliente) sistemaAlquiler.getUsuario(usuario, contraseñaCliente);
 					}
-					// TODO
-					ArrayList<LicenciaDeConduccion> conductoresExtra = null;
+					ArrayList<LicenciaDeConduccion> conductoresExtra = new ArrayList<LicenciaDeConduccion>();
+					boolean agregarMas = input("Agregar conductores extra? (si/no)").equals("si");
+					while (agregarMas) {
+						String usuarioConductorExtra = input("Usuario de conductor extra");
+						String claveConductorExtra = input("Contraseña de conductor extra");
+						Cliente conductorExtra = (Cliente) sistemaAlquiler.getUsuario(usuarioConductorExtra, claveConductorExtra);
+						if (conductorExtra != null) {
+							conductoresExtra.add(conductorExtra.getLicenciaDeConduccion());
+						} else {
+							System.out.println("El cliente solicitado no existe");
+						}
+						agregarMas = input("Agregar mas conductores extra? (si/no)").equals("si");
+					}
 					sistemaAlquiler.crearAlquiler(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
 							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
 					opcionSeleccionada = 0;
