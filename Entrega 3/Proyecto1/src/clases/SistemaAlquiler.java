@@ -103,6 +103,32 @@ public class SistemaAlquiler {
         }
 		
 	}
+	
+	public void registroCliente(String usuario, String clave, String nombres, String numeroTelefono, String direccion,
+			String fechaNacimiento, String nacionalidad, String imagenDocumentoIdentidad,
+			String numeroLicencia, String paisExpedicion, String fechaVencimientoLicencia, String imagen, String numeroTarjeta, String fechaVencimientoTarjeta, String cvv) 
+	{
+		Map<String, Cliente> mapaClientes = datos.getClientes();
+		if (!mapaClientes.containsKey(usuario)) 
+		{
+            // El cliente no existe, agregarlo
+			LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion, fechaVencimientoLicencia, imagen);
+			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito( numeroTarjeta, fechaVencimientoTarjeta, cvv);
+			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento, nacionalidad, 
+					imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
+			mapaClientes.put(usuario, nuevoCliente);
+			datos.actUsuarios();
+        } 
+		else
+        {
+            // El cliente ya existe
+            System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+        }
+		
+	}
+	
+	
+	
 
 	
 }

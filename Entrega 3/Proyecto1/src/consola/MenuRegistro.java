@@ -82,7 +82,28 @@ public class MenuRegistro {
 	
 	public void ejecutarRegistroCliente(SistemaAlquiler sistemaAlquiler) 
 	{
-		input("");
+		System.out.println("Para registrar un cliente nuevo por favor ingrese los siguientes datos: \n");
+		String usuario = input("Usuario");
+		String clave = input("Clave");
+		String nombres = input("Nombre(s) completo(s)");
+		String numeroTelefono = input("Numero de teléfono");
+		String direccion = input("Dirección");
+		String fechaNacimiento = input("Fecha de nacimiento");
+		String nacionalidad = input("Nacionalidad");
+		String imagenDocumentoIdentidad = input("Imagen documento identidad");
+		String numeroLicencia = input("Numero de su licencia de conducción");
+		String paisExpedicion = input("País de expedición");
+		String fechaVencimientoLicencia = input("Fecha de vencimiento de su licencia");
+		String imagen = input("Imagen licencia de conducción");
+		String numeroTarjeta = input("Número tarjeta de crédito");
+		String fechaVencimientoTarjeta = input("Fecha de vencimiento de su tarjeta de crédito");
+		String cvv = input("cvv");
+		
+		sistemaAlquiler.registroCliente(usuario, clave, nombres, numeroTelefono, direccion,
+				fechaNacimiento, nacionalidad, imagenDocumentoIdentidad,numeroLicencia,
+				paisExpedicion, fechaVencimientoLicencia, imagen, numeroTarjeta,
+				fechaVencimientoTarjeta, cvv);
+		
 	}
 	
 	

@@ -44,19 +44,19 @@ public class MenuPrincipal {
 					String rolUsuario = usuarioActual.getTipo();
 					 if (rolUsuario.equals("Administrador"))
 					{
-						System.out.println("Inicio de sesión como Admin exitoso");
+						System.out.println("Inicio de sesión como administrador exitoso");
 					//	MenuAdmin menuAdmin = new MenuAdmin();
 					//	menuAdmin.mostrarMenu();
 					}
 					else if (rolUsuario.equals("Empleado"))
 					{
-						System.out.println("Inicio de sesión como Empleado exitoso");
+						System.out.println("Inicio de sesión como empleado exitoso");
 					//	MenuEmpleado menuEmpleado = new MenuEmpleado();
 					//  MenuEmpleado.mostrarMenu();
 					}
 					else if (rolUsuario.equals("Cliente"))
 					{
-						System.out.println("Inicio de sesión como Empleado exitoso");
+						System.out.println("Inicio de sesión como cliente exitoso");
 					//  MenuCliente menuAdmin = new MenuCliente();
 					//  menuCliente.mostrarMenu();
 					}
