@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import clases.*;
+import java.util.ArrayList;
+import java.util.Map;
+
+import clases.Admin;
+import clases.Sede;
+import clases.SistemaAlquiler;
 
 public class MenuAdmin {
 	
@@ -23,7 +28,7 @@ public class MenuAdmin {
 	public void mostrarMenu() throws FileNotFoundException, IOException, ClassNotFoundException 
 	{
 		
-		if (sedeAdmin.equals(null))
+		if (sedeAdmin == null)
 		{
 			//Cuando la sede es null se tiene un administrador general
 			mostrarMenuGeneral();
@@ -69,44 +74,93 @@ public class MenuAdmin {
 		{
 			try
 			{
-				if (opcionSeleccionada == 1  && sedeAdmin.equals(null)) 
+				if (opcionSeleccionada == 1  && sedeAdmin == null) 
 				{
-					//Todo Call registrar carro
+					System.out.println("Para agregar un vehiculo nuevo ingrese la siguiente informacion: ");
+					
+					//ejecutarAgregarVehiculo();
 					opcionSeleccionada=0;
 				}
-				else if (opcionSeleccionada == 2 && sedeAdmin.equals(null)) 
+				else if (opcionSeleccionada == 2 && sedeAdmin == null) 
 				{
+					System.out.println("Para dar de baja un vehiculo nuevo ingrese la siguiente informacion: ");
 					//ToDo call eliminar carro
 			        opcionSeleccionada=0;
 			    }
-				else if (opcionSeleccionada == 3 && sedeAdmin.equals(null)) 
+				else if (opcionSeleccionada == 3 && sedeAdmin == null) 
 				{
-					//ToDo crear sede 
+					System.out.println("Para crear una sede nueva ingrese la siguiente informacion: ");
+					String nomSede = input("Nombre de la sede");
+					String ubiSede = input("Ubicación de la sede");
+					int hrsASede = Integer.parseInt(input("Horario de apertura de la sede"));
+					int hrsCSede = Integer.parseInt(input("Horario de cierre de la sede"));
+					
+					sistemaAlquiler.crearSede(nomSede, ubiSede, hrsASede, hrsCSede );
 			        opcionSeleccionada=0;
 			    }
-				else if (opcionSeleccionada == 4 && sedeAdmin.equals(null)) 
+				else if (opcionSeleccionada == 4 && sedeAdmin == null) 
 				{
-					//ToDo modificar sede
+					System.out.println("Para modificar una sede ingrese la siguiente informacion: ");
+					
+					//Mostrar Sedes existentes y pedir una 
+					ArrayList<Sede> listaSedes = sistemaAlquiler.getSedes();
+					for (int i = 0; i < listaSedes.size(); i++)
+					{
+			            String elemento = listaSedes.get(i).getNombre();
+			            System.out.println(i + " " + elemento + "\n");
+			        }
+					int sedeInt = Integer.parseInt(input("Ingrese el numero de la sede a la cual se modificará"));
+					Sede SedeOb = listaSedes.get(sedeInt);  // Se omitió el manejo del error en el cual el usuario elige un numero fuera del rango permitido. 
+					String nomSede = SedeOb.getNombre();
+					
+					//
+					System.out.println("Parametro que desea modificar: ");
+					System.out.println("1) Nombre");
+					System.out.println("2) Horario de Atención");
+					int parametro = Integer.parseInt(input("Opción"));
+					try
+					{
+						if (parametro == 1) 
+						{
+							String nuevoNom = input("Ingrese el nuevo nombre");
+							sistemaAlquiler.modificarNombreSede(nuevoNom, nomSede);
+						}
+						else if (parametro == 2) 
+						{
+							int hrsASede = Integer.parseInt(input("Nuevo horario de apertura de la sede"));
+							int hrsCSede = Integer.parseInt(input("Nuevo horario de cierre de la sede"));
+							sistemaAlquiler.modificarHorarioSede(nomSede, hrsASede, hrsCSede);
+					    }
+						else
+						{
+							System.out.println("Por favor seleccione una opción valida.");
+						}
+					}
+					catch (NumberFormatException e)
+					{
+						System.out.println("Debe seleccionar uno de los numeros de las opciones.");
+					}
+					
 			        opcionSeleccionada=0;
 			    }
-				else if (opcionSeleccionada == 1 && !sedeAdmin.equals(null))
+				else if (opcionSeleccionada == 1 && sedeAdmin != null)
 				{
-					//ToDo call registrar empleado
+					//ToDo call registrar empleado (pedir parametros y llamar funcion)
 			        opcionSeleccionada=0;
 			    }
-				else if (opcionSeleccionada == 2 && !sedeAdmin.equals(null))
+				else if (opcionSeleccionada == 2 && sedeAdmin != null)
 				{
 					//ToDo call eliminar empleado
 			        opcionSeleccionada=0;
 			    }
 				else if (opcionSeleccionada == 5) 
 				{
-					//ToDo call consultar ubicacion vehiculo
+					//ToDo call consultar ubicacion vehiculo (pedir parametros y llamar funcion)
 			        opcionSeleccionada=0;
 			    }
 				else if (opcionSeleccionada == 6) 
 				{
-					//ToDo call consultar historial vehiculo
+					//ToDo call consultar historial vehiculo (pedir parametros y llamar funcion)
 			        opcionSeleccionada=0;
 			    }
 				
@@ -121,7 +175,7 @@ public class MenuAdmin {
 				else if (opcionSeleccionada == 0)	
 				{
 					
-					if (sedeAdmin.equals(null))
+					if (sedeAdmin == null)
 					{
 						//Cuando la sede es null se tiene un administrador general
 						mostrarMenuGeneral();
