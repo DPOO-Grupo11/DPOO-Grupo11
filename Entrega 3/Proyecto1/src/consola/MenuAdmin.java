@@ -100,7 +100,7 @@ public class MenuAdmin {
 						String elemento = listaSedes.get(i).getNombre();
 						System.out.println(i + " " + elemento + "\n");
 					}
-					int sedeInt = Integer.parseInt(input("Ingrese el numero de la sede a la cual se asignara el administrador"));
+					int sedeInt = Integer.parseInt(input("Ingrese el numero de la sede a la cual se asignara el vehiculo"));
 					Sede SedeOb = listaSedes.get(sedeInt);
 					String sede = SedeOb.getNombre();
 					String estado = "disponible";
