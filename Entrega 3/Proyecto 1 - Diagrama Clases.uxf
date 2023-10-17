@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>240</y>
+      <w>185</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Inventario
+--
+_-prioridadCategoria: List&lt;String&gt;_
+-vehiculos: Map&lt;String, 
+   Map&lt;String, Map&lt;String, Vehiculo&gt; &gt;
+ &gt; // por categoria
+-reservas: Map&lt;String, Reserva&gt; // id cliente
+-archivoInventario: String
+-calendario: Map&lt;String, List&lt;Range&lt;LocalDateTime&gt;&gt;&gt;
+--
+#Inventario(archivoInventario: String): Inventario
+#agregarVehiculo(vehiculo: Vehiculo)
+#removerVehiculo(placa: String)
+#actualizarEstadoVehiculo(String placa, String estado)
+
+-
+-- la llave de vehiculos es la categoria, la llave de sub
+   mapa es el estado del carro
+-- cargar datos de vehiculos
+-- manejar la devolucion de carros
+-- el calendario almacena las fechas para las cuales cada
+   carro estara en uso, sirve para el sistema de reservas</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>440</y>
+      <w>185</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Vehiculo
+--
+-placa: String
+-marca: String
+-color: String
+-transmision: String
+-clasificacion: String
+-sede: String
+-fechaDisponible: LocalDateTime
+-comentarios: String
+-estado: String
+
+--
+#Vehiculo(placa: String, marca: String,
+   color: String, transmision: String,
+   clasificacion: String,
+   sede: String,
+   fechaDisponible: LocalDateTime, comentarios: String,
+   cliente: Cliente, ubicacionDevolucion: String,
+   fechaDevolucion: LocalDateTime, estado: String
+): Vehiculo
+--
+- prioridadCategoria es una lista donde la primera
+ categoria es la mejor y la ultima la peor
+- dependiendo del estado, algunas propiedades seran
+  null</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>290</y>
+      <w>160</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Cliente
+--
+-nombreUsuario: String
+-contrasena: String
+-nombres: String
+-numeroTelefono: String
+-direccion: String
+-fechaNacimiento: String
+-nacionalidad: String
+-imagenDocumentoIdentidad: String
+-licenciaConduccion: LicenciaDeConduccion
+-tarjetaCredito: TarjetaDeCredito
+--
+#Cliente(nombres: String,
+     numeroTelefono: String, direccion: String,
+     fechaNacimiento: String, nacionalidad: String,
+     imagenDocumentoIdentidad: Image,
+     licenciaConduccion: LicenciaDeConduccion,
+     tarjetaCredito: TarjetaDeCredito): Cliente
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>145</x>
+      <y>440</y>
+      <w>160</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>LicenciaDeConduccion
+--
+-numero: int
+-paisExpedicion: String
+-fechaVencimiento: String
+-imagen: Image
+--
+#LicenciaDeConduccion(numero:int,
+     paisExpedicion: String,
+     fechaVencimiento: String,
+     imagen: Image): LicenciaDeConduccion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>335</y>
+      <w>160</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>TarjetaDeCredito
+--
+-numero: int
+-fechaVencimiento: String
+-cvv: int
+--
+#TarjetaDeCredito(numero: int,
+     fechaVencimiento: String,
+     cvv: int): TarjetaDeCredito</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>550</y>
+      <w>180</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Reserva
+--
+-categoriaSolicitada: String
+-fechaRecogida: LocalDateTime
+-ubicacionRecogida: String
+-ubicacionEntrega: String
+-rangoEntrega: Range&lt;LocalDateTime&gt;
+-cliente: Cliente
+-vehiculo: Vehiculo
+-conductoresExtra(): list&lt;LicenciaDeConduccion&gt;
+-tarifa: Tarifa
+--
+#Reserva(categoriaSolicitada: String,
+     fechaRecogida: LocalDateTime,
+     ubicacionRecogida: String,
+     ubicacionEntrega: String,
+     rangoEntrega: Range&lt;LocalDateTime&gt;
+     Vehiculo: Vehiculo): Reserva
+#setVehiculo(Vehiculo vehiculo)
+#setFechaEntrega(LocalDateTime fecha)
+#calcularCosto(): Double
+--
+- una reserva se vuelve un alquiler en el momento que un
+  empleado le asigna un vehiculo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>200</y>
+      <w>95</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Seguro
+--
+-nombre: String
+-costoDiario: Float
+--
+#Seguro(nombre: String, 
+costoDiario: Float): Seguro</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>455</y>
+      <w>160</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>Sede
+--
+-nombre: String
+-ubicacion: String
+-horariosDeAtencion: List&lt;HorarioDeAtencion&gt;
+-empleados: Map&lt;String, Empleado&gt;
+--
+#Sede(nombre: String,
+     ubicacion: String,
+     horariosDeAtencion: List&lt;HorarioDeAtencion&gt;
+ ): Sede
+--
+- llave de empleados es el nombre de usuario</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>145</x>
+      <y>555</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>HorarioDeAtencion
+--
+-dia: String
+-horas: Range&lt;Integer&gt;
+--
+#HorarioDeAtencion(dia: String,
+     horas: Range&lt;Integer&gt;): HorarioDeAtencion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>125</y>
+      <w>185</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>Admin
+--
+-nombreUsuario: String
+-contrasena: String
+-sede: Sede
+--
+--
+- un Admin es un Admin general si sede == null, y es un
+  Admin de Sede si sede != null</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>585</y>
+      <w>145</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Empleado
+--
+-nombreUsuario: String
+-contrasena: String
+-rol: String
+--
+--
+El rol del empleado indica si se encarga de 
+atender clientes o de actualizar el
+estado de carros
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>735</x>
+      <y>5</y>
+      <w>200</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>Menu Registro 
+--
+--
++ejecutarRegistrarCliente(nombres: String, numeroTelefono: String,
+   direccion: String, fechaNacimiento: String,
+   nacionalidad: String, imagenDocumentoIdentidad: String,
+   licenciaConduccion: LicenciaDeConduccion,
+   tarjetaCredito: TarjetaDeCredito)
+
++ input(String msj): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>585</x>
+      <y>5</y>
+      <w>130</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>Menu Principal
+--
+--
++main(String[] args): void
++ mostrarMenu(): void
++ ejecutarOpcion():void
++ login(String nombre, String contraseña)
++ input(String msj): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>35</y>
+      <w>35</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>755</x>
+      <y>115</y>
+      <w>180</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>MenuEmpleado
+--
+--
++ mostrarMenu(): void
++ input(String msj): String
++ formalizarAlquiler(int idReserva, String cedulaCliente):
++ crearAlquiler( String cedulaCliente, 
+String categoriaSolicitada,
+LocalDateTime fechaRecogida ,
+String ubicacionRecogida,
+String ubicacionEntrega,
+Range&lt;LocalDateTime&gt; rangoEntrega)
+
+
++ cerrarSesion(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>45</y>
+      <w>85</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>65</y>
+      <w>15</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>65</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>160.0;100.0;160.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>55</y>
+      <w>290</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;330.0;560.0;330.0;560.0;10.0;510.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>235</x>
+      <y>415</y>
+      <w>85</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;20.0;150.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>545</y>
+      <w>65</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+
+
+</panel_attributes>
+    <additional_attributes>10.0;60.0;110.0;60.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>325</y>
+      <w>40</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>10.0;300.0;30.0;300.0;30.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>220</y>
+      <w>40</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>465</x>
+      <y>300</y>
+      <w>45</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>615</x>
+      <y>180</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>165</y>
+      <w>15</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>190</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>215</x>
+      <y>305</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;20.0;190.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>605</x>
+      <y>120</y>
+      <w>135</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>MenuCliente
+--
+--
++ mostrarMenu(): void
++ input(String msj): String
++ ejecutarCrearReserva(): void
++ ejecutarModificarReserva(): void
++ cerrarSesion(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>435</x>
+      <y>105</y>
+      <w>135</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>MenuAdmin
+--
+--
++ mostrarMenu(): void
++ input(String msj): String
++ ejecutarAgregarCarro():void
++ ejecutarEliminarCarro():void
++ modificarSede(): void
++ crearSeguro(): void
+
++ cerrarSesion(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>545</y>
+      <w>15</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+
+
+</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>335</x>
+      <y>10</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Note..
+bg=#ff0000
+- Todas las Clases tienen getters y setters, pero 
+se omitieron en el diagrama por claridad.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>535</y>
+      <w>15</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>185</y>
+      <w>195</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0;370.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>335</y>
+      <w>50</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>400</y>
+      <w>15</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>585</x>
+      <y>65</y>
+      <w>15</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;300.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>500</x>
+      <y>215</y>
+      <w>185</w>
+      <h>325</h>
+    </coordinates>
+    <panel_attributes>SistemaAlquiler
+--
+-inventario: Inventario
+-clientes: Map&lt;String, Cliente&gt;
+-admins: Map&lt;String, Admin&gt;
+-seguros: List&lt;Seguro&gt;
+-sedes: List&lt;Sede&gt;
+-vehiculos: Map&lt;String, Vehiculo&gt;
+-reservas: Map&lt;String, Reserva&gt;
+-empleados: Map&lt;String, empleado&gt;
+--
++ cargarDatos(): 
++getUsuario():Usuario
+-cargarInventario(File archivoInventario): void
+-cargarAdmins(File arhcivoAdmins): void
+-cargarClientes(File arhcivoClientes): void
+-cargarSedes(File archivoSedes): Map&lt;String, Sede&gt;
+-cargarEmpleados(File archivosEmpleados
+-getUsuario():
+
+#Metodos del administrador
++ añadirVehiculo(String placa, String marca, String color
+String Transmision, String clasificacion, String sede, 
+String estado ): void 
++ eliminarVehiculo(String placa): void
++ modificarSede(): void
++ crearSeguro(): void
++ modificarSeguro(): void  
+
+#Metodos del cliente
++crearReserva(): void 
++modificarReserva(): void
+
+#Metodos empleado
++ formalizarAlquiler():void 
++ crearAlquiler():void
++ actualizarEstado():void
+
+--
+Actua como controlador, es decir, llama los metodo de las
+clases respectivas para solucionar algun requerimiento
+funcional</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>40</y>
+      <w>105</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Usuario
+--
+-usuario: String
+-contraseña: String
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>80</y>
+      <w>110</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;440.0;200.0;440.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>295</x>
+      <y>80</y>
+      <w>15</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>115</x>
+      <y>45</y>
+      <w>235</w>
+      <h>595</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0;20.0;1170.0;450.0;1170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>535</y>
+      <w>40</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>10.0;120.0;60.0;120.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>325</x>
+      <y>675</y>
+      <w>175</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Tarifa
+--
+- precioCategoria: long
+- precioSedeDiferente: long
+- precioConductorExtra: long
+--
++ Tarifa(precioCategoria,precioSedeDiferente,
+precioConductorExtra)
++calcularTarifa(String categoria, String sedeEntrega, 
+String sedeRecogida, String numConductoresExtra)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>695</y>
+      <w>45</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+</diagram>
