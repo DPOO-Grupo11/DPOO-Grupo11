@@ -1,0 +1,6 @@
+Administrador General:
+usuario: AdministradorGen
+clave: SenecaDPOO
+
+Clave registrar administradores:
+RegisterAdmin
