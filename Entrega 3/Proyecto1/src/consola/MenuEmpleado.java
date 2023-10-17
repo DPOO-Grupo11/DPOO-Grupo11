@@ -68,7 +68,8 @@ public class MenuEmpleado {
 					while (agregarMas) {
 						String usuarioConductorExtra = input("Usuario de conductor extra");
 						String claveConductorExtra = input("Contraseña de conductor extra");
-						Cliente conductorExtra = (Cliente) sistemaAlquiler.getUsuario(usuarioConductorExtra, claveConductorExtra);
+						Cliente conductorExtra = (Cliente) sistemaAlquiler.getUsuario(usuarioConductorExtra,
+								claveConductorExtra);
 						if (conductorExtra != null) {
 							conductoresExtra.add(conductorExtra.getLicenciaDeConduccion());
 						} else {
@@ -84,6 +85,7 @@ public class MenuEmpleado {
 					System.out.println("Cerrando sesión ...");
 					this.empleadoActual = null;
 					continuar = false;
+					sistemaAlquiler.guardarDatos();
 				} else {
 					System.out.println("Por favor seleccione una opción valida.");
 				}

@@ -153,6 +153,7 @@ public class MenuAdmin {
 					this.adminActual = null;
 					this.sedeAdmin = null;
 					continuar = false;
+					sistemaAlquiler.guardarDatos();
 
 				} else if (opcionSeleccionada == 0) {
 

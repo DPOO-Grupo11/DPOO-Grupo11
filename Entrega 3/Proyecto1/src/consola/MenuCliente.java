@@ -96,6 +96,7 @@ public class MenuCliente {
 					System.out.println("Cerrando sesión ...");
 					this.clienteActual = null;
 					continuar = false;
+					sistemaAlquiler.guardarDatos();
 				} else {
 					System.out.println("Por favor seleccione una opción valida.");
 				}
