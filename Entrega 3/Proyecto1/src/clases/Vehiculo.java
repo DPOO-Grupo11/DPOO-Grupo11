@@ -22,7 +22,7 @@ public class Vehiculo implements Serializable {
 	private ArrayList<Reserva> historial;
 
 	public Vehiculo(String placa, String marca, String color, String transmision, String categoria, String sede,
-			String ubicacion, LocalDateTime fechaDisponible, String comentarios, String estado,
+			LocalDateTime fechaDisponible, String comentarios, String estado,
 			ArrayList<Reserva> historial) {
 		this.placa = placa;
 		this.marca = marca;
@@ -30,7 +30,6 @@ public class Vehiculo implements Serializable {
 		this.transmision = transmision;
 		this.categoria = categoria;
 		this.sede = sede;
-		this.ubicacion = ubicacion;
 		this.fechaDisponible = fechaDisponible;
 		this.comentarios = comentarios;
 		this.estado = estado;

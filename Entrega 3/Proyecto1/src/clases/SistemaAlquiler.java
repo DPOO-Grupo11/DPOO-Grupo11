@@ -37,7 +37,7 @@ public class SistemaAlquiler {
 	 */
 	public void cargarDatos() throws IOException, ClassNotFoundException {
 		// cargar bytes de archivo
-		File archivoDatos = new File(dirDatos, "datos");
+		File archivoDatos = new File("Data/persistencia");
 		if (archivoDatos.exists()) {
 			byte[] bytes = Files.readAllBytes(archivoDatos.toPath());
 			// convertir bytes a objeto
@@ -63,7 +63,7 @@ public class SistemaAlquiler {
 		os.close();
 		byte[] bytes = bs.toByteArray();
 		// guardar bytes en archivo
-		File archivoDatos = new File(dirDatos, "datos");
+		File archivoDatos = new File("Data/persistencia");
 		if (!archivoDatos.exists()) {
 			if (!archivoDatos.createNewFile())
 				throw new FileNotFoundException("no se pudo crear el archivo");
@@ -80,7 +80,7 @@ public class SistemaAlquiler {
 
 	public ArrayList<Sede> getSedes() {
 		Map<String, Sede> mapaSedes = datos.getSedes();
-		ArrayList<Sede> listaSedes = (ArrayList<Sede>) mapaSedes.values();
+		ArrayList<Sede> listaSedes = new ArrayList<Sede>(mapaSedes.values());
 		return listaSedes;
 	}
 
@@ -291,5 +291,25 @@ public class SistemaAlquiler {
 			}
 			categoria = Inventario.prioridadCategoria.get(i);
 		}
+	}
+
+	public void AgregarVehiculo(String placa, String marca, String color, String transmision, String categoria, String sede, String estado) {
+		Map<String, Vehiculo> mapaVehiculos = datos.getVehiculos();
+		if (!mapaVehiculos.containsKey(placa)) {
+			// La sede no existe, agregarla
+			LocalDateTime fechaDisponible = null;
+			String comentarios = "vehiculo nuevo";
+			ArrayList<Reserva> historial = null;
+			Vehiculo nuevoVehiculo = new Vehiculo(placa, marca, color, transmision, categoria, sede, fechaDisponible, comentarios, estado, historial);
+			mapaVehiculos.put(placa, nuevoVehiculo);
+			System.out.println("Nuevo vehiculo creada");
+		} else {
+			// La sede ya existe
+			System.out.println("Ya hay un vehiculo registrado con esa placa. Intenta con otro");
+		}
+		
+		
+		
+		
 	}
 }

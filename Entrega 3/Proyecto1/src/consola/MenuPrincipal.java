@@ -36,21 +36,28 @@ public class MenuPrincipal {
 					String usuario = input("Usuario");
 					String clave = input("Clave");
 					Usuario usuarioActual = sistemaAlquiler.getUsuario(usuario, clave);
-					String rolUsuario = usuarioActual.getTipo();
-					if (rolUsuario.equals("Administrador")) {
-						Admin adminActual = (Admin) usuarioActual;
-						System.out.println("Inicio de sesión como administrador exitoso");
-						MenuAdmin menuAdmin = new MenuAdmin(sistemaAlquiler, adminActual);
-						menuAdmin.mostrarMenu();
-					} else if (rolUsuario.equals("Empleado")) {
-						System.out.println("Inicio de sesión como empleado exitoso");
-						// MenuEmpleado menuEmpleado = new MenuEmpleado();
-						// MenuEmpleado.mostrarMenu();
-					} else if (rolUsuario.equals("Cliente")) {
-						System.out.println("Inicio de sesión como cliente exitoso");
-						// MenuCliente menuAdmin = new MenuCliente();
-						// menuCliente.mostrarMenu();
-					} else {
+					if (usuarioActual != null) 
+					{
+						String rolUsuario = usuarioActual.getTipo();
+						if (rolUsuario.equals("Administrador")) {
+							Admin adminActual = (Admin) usuarioActual;
+							System.out.println("Inicio de sesión como administrador exitoso");
+							MenuAdmin menuAdmin = new MenuAdmin(sistemaAlquiler, adminActual);
+							menuAdmin.mostrarMenu();
+						} else if (rolUsuario.equals("Empleado")) {
+							System.out.println("Inicio de sesión como empleado exitoso");
+							Empleado empleadoActual = (Empleado) usuarioActual;
+							MenuEmpleado menuEmpleado = new MenuEmpleado(sistemaAlquiler, empleadoActual );
+							menuEmpleado.mostrarMenu();
+						} else if (rolUsuario.equals("Cliente")) {
+							System.out.println("Inicio de sesión como cliente exitoso");
+							// MenuCliente menuAdmin = new MenuCliente();
+							// menuCliente.mostrarMenu();
+						} else {
+							System.out.println("error con los credenciales");
+						}
+					}
+					else {
 						System.out.println("error con los credenciales");
 					}
 					opcionSeleccionada = 0;
@@ -77,6 +84,7 @@ public class MenuPrincipal {
 					opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
 				} else {
 					System.out.println("Por favor seleccione una opción valida.");
+					opcionSeleccionada = 0;
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Debe seleccionar uno de los numeros de las opciones.");

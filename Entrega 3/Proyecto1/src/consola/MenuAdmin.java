@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
 import clases.Admin;
 import clases.Empleado;
+import clases.Reserva;
 import clases.Sede;
 import clases.SistemaAlquiler;
 
@@ -67,8 +69,45 @@ public class MenuAdmin {
 			try {
 				if (opcionSeleccionada == 1 && sedeAdmin == null) {
 					System.out.println("Para agregar un vehiculo nuevo ingrese la siguiente informacion: ");
-
-					// ejecutarAgregarVehiculo();
+					
+					String placa = input("Placa");
+					String marca = input("Marca");
+					String color = input("Color");
+					String transmision = input("Transmision");
+					System.out.println("1) pequeños");
+					System.out.println("2) SUV");
+					System.out.println("3) Lujo");
+					System.out.println("4) Otros");
+					int eleccion = Integer.parseInt(input("Categoria"));
+					
+					String categoria = "";
+					if (eleccion ==1) 
+					{
+						categoria = "Pequeños";
+					}
+					else if (eleccion == 2){
+						categoria = "SUV";
+					}
+					else if (eleccion == 3){
+						categoria = "Lujo";
+					}
+					else{
+						categoria = "Otros";
+					}
+					
+					ArrayList<Sede> listaSedes = sistemaAlquiler.getSedes();
+					for (int i = 0; i < listaSedes.size(); i++) {
+						String elemento = listaSedes.get(i).getNombre();
+						System.out.println(i + " " + elemento + "\n");
+					}
+					int sedeInt = Integer.parseInt(input("Ingrese el numero de la sede a la cual se asignara el administrador"));
+					Sede SedeOb = listaSedes.get(sedeInt);
+					String sede = SedeOb.getNombre();
+					String estado = "disponible";
+					
+					sistemaAlquiler.AgregarVehiculo(placa, marca, color, transmision, categoria, sede, estado );
+					
+					
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2 && sedeAdmin == null) {
 					System.out.println("Para dar de baja un vehiculo nuevo ingrese la siguiente informacion: ");
@@ -168,7 +207,10 @@ public class MenuAdmin {
 					System.out.println("5. Consultar ubicacion vehiculo");
 					System.out.println("6. Consultar historial vehiculo");
 					System.out.println("7. Cerrar sesión");
-				} else {
+					opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
+				} 
+				else 
+				{
 					System.out.println("Por favor seleccione una opción valida.");
 				}
 			} catch (NumberFormatException e) {
