@@ -7,11 +7,12 @@ public class Empleado extends Usuario implements Serializable {
 	/**
 	 * 
 	 */
-	String rol;
+	private String rol;
+	private Sede sede;
 	
-	public Empleado(String usuario, String contraseña, String rol) {
+	public Empleado(String usuario, String contraseña, String rol, Sede sede) {
 		super(usuario, contraseña, "Empleado");
 		this.rol = rol;
-	}
+		this.sede = sede;	}
 	
 }
