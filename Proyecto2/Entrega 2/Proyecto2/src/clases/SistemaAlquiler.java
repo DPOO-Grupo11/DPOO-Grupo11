@@ -84,6 +84,10 @@ public class SistemaAlquiler {
 		return listaSedes;
 	}
 
+	public Sede getSede(String nombre) {
+		return datos.getSede(nombre);
+	}
+
 	public void registroAdmin(String usuario, String clave, String sede) {
 		Map<String, Admin> mapaAdmins = datos.getAdmins();
 		if (!mapaAdmins.containsKey(usuario)) {
@@ -98,8 +102,8 @@ public class SistemaAlquiler {
 
 	}
 
-	public void registroEmpleado(String usuario, String clave, String rol) {
-		Empleado empleado = new Empleado(usuario, clave, rol);
+	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) {
+		Empleado empleado = new Empleado(usuario, clave, rol, sede);
 		if (datos.getEmpleados().containsKey(usuario)) {
 			System.out.println("ya existe un usuario con este nombre, intente con otro");
 			return;

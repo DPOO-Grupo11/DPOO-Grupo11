@@ -101,6 +101,10 @@ public class ContenedorDeDatos implements Serializable {
 		return sedes;
 	}
 
+	public Sede getSede(String nombre) {
+		return sedes.get(nombre);
+	}
+
 	public Map<String, Vehiculo> getVehiculos() {
 		return vehiculos;
 	}
