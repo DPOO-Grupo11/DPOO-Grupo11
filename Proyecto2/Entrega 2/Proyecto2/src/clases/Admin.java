@@ -1,24 +1,24 @@
 package clases;
 
-import java.io.Serializable;
-
-public class Admin extends Usuario implements Serializable {
+public class Admin extends Usuario {
 	private static final long serialVersionUID = 2699912451110887949L;
 	/**
 	 * 
 	 */
 	protected String sede = null;
 
-	
-	// Constructores: existe uno para el admin general, que solo sea usa la primera vez que se corre la aplicacion. Y otro para definir admins locales. 
-	
-	public Admin(String usuario, String contraseña){
+	// Constructores: existe uno para el admin general, que solo sea usa la primera
+	// vez que se corre la aplicacion. Y otro para definir admins locales.
+
+	public Admin(String usuario, String contraseña) {
 		super(usuario, contraseña, "Administrador");
 	}
+
 	public Admin(String usuario, String contraseña, String sede) {
 		super(usuario, contraseña, "Empleado");
 		this.sede = sede;
 	}
+
 	/*
 	 * getters
 	 */

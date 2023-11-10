@@ -101,7 +101,12 @@ public class MenuAdmin {
 					String sede = SedeOb.getNombre();
 					String estado = "disponible";
 
-					sistemaAlquiler.AgregarVehiculo(placa, marca, color, transmision, categoria, sede, estado);
+					try {
+						sistemaAlquiler.agregarVehiculo(placa, marca, color, transmision, categoria, sede, estado);
+						System.out.println("Nuevo vehiculo creada");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2 && sedeAdmin == null) {
@@ -115,7 +120,17 @@ public class MenuAdmin {
 					int hrsASede = Integer.parseInt(input("Horario de apertura de la sede"));
 					int hrsCSede = Integer.parseInt(input("Horario de cierre de la sede"));
 
-					sistemaAlquiler.crearSede(nomSede, ubiSede, hrsASede, hrsCSede);
+					try {
+						sistemaAlquiler.crearSede(nomSede, ubiSede, hrsASede, hrsCSede);
+						System.out.println("Nueva sede creada");
+					} catch (Exception e) {
+						if (e instanceof IllegalArgumentException) {
+							System.out.println("Rango no válido: " + e.getMessage());
+						} else {
+							System.out.println(e.getMessage());
+						}
+					}
+
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 4 && sedeAdmin == null) {
 					System.out.println("Para modificar una sede ingrese la siguiente informacion: ");
@@ -139,11 +154,21 @@ public class MenuAdmin {
 					try {
 						if (parametro == 1) {
 							String nuevoNom = input("Ingrese el nuevo nombre");
-							sistemaAlquiler.modificarNombreSede(nuevoNom, nomSede);
+							try {
+								sistemaAlquiler.modificarNombreSede(nuevoNom, nomSede);
+								System.out.println("Nombre sede modificado");
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
 						} else if (parametro == 2) {
 							int hrsASede = Integer.parseInt(input("Nuevo horario de apertura de la sede"));
 							int hrsCSede = Integer.parseInt(input("Nuevo horario de cierre de la sede"));
-							sistemaAlquiler.modificarHorarioSede(nomSede, hrsASede, hrsCSede);
+							try {
+								sistemaAlquiler.modificarHorarioSede(nomSede, hrsASede, hrsCSede);
+								System.out.println("Horarios de atencion establecidos");
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
 						} else {
 							System.out.println("Por favor seleccione una opción valida.");
 						}

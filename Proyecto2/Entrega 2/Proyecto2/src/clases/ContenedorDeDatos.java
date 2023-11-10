@@ -52,10 +52,61 @@ public class ContenedorDeDatos implements Serializable {
 		return nuevoId;
 	}
 
+	public boolean sedeExiste(String nombreSede) {
+		return !sedes.containsKey(nombreSede);
+	}
+
+	public void nuevaSede(Sede sede) throws Exception {
+		if (sedeExiste(sede.getNombre())) {
+			throw new Exception("Ya existe una sede con este nombre. Intenta con otro.");
+		}
+		sedes.put(sede.getNombre(), sede);
+	}
+
+	public ArrayList<Sede> listaDeSedes() {
+		return new ArrayList<Sede>(sedes.values());
+	}
+
+	public void modificarNombreSede(String nuevoNomSede, String actNomSede) throws Exception {
+		if (sedeExiste(actNomSede)) {
+			Sede sedeActual = getSede(actNomSede);
+			sedes.remove(actNomSede);
+			sedeActual.setNombre(nuevoNomSede);
+			sedes.put(actNomSede, sedeActual);
+		} else {
+			throw new Exception("La sede ingresada no fue encontrada ");
+		}
+	}
+
+	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede) throws Exception {
+		if (sedes.containsKey(nomSede)) {
+			Sede sedeActual = sedes.get(nomSede);
+			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
+			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
+			sedeActual.setHorariosDeAtencion(hrs);
+		} else {
+			throw new Exception("La sede ingresada no fue encontrada ");
+		}
+	}
+
+	public boolean vehiculoExiste(String nombreVehiculo) {
+		return !sedes.containsKey(nombreVehiculo);
+	}
+
+	public void nuevoVehiculo(Vehiculo v) throws Exception {
+		if (vehiculoExiste(v.getPlaca())) {
+			throw new Exception("Ya existe un vehiculo con esta placa.");
+		}
+		vehiculos.put(v.getPlaca(), v);
+	}
+
+	public Vehiculo getVehiculo(String placa) {
+		return vehiculos.get(placa);
+	}
+
 	/*
 	 * getters
 	 */
-
 	public Usuario getUsuarioActual() {
 		return usuario;
 	}
@@ -97,16 +148,8 @@ public class ContenedorDeDatos implements Serializable {
 		return seguros;
 	}
 
-	public Map<String, Sede> getSedes() {
-		return sedes;
-	}
-
 	public Sede getSede(String nombre) {
 		return sedes.get(nombre);
-	}
-
-	public Map<String, Vehiculo> getVehiculos() {
-		return vehiculos;
 	}
 
 	public Map<String, Reserva> getReservas() {
@@ -120,7 +163,6 @@ public class ContenedorDeDatos implements Serializable {
 	/*
 	 * setters
 	 */
-
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}

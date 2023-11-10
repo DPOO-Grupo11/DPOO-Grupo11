@@ -79,9 +79,7 @@ public class SistemaAlquiler {
 	}
 
 	public ArrayList<Sede> getSedes() {
-		Map<String, Sede> mapaSedes = datos.getSedes();
-		ArrayList<Sede> listaSedes = new ArrayList<Sede>(mapaSedes.values());
-		return listaSedes;
+		return datos.listaDeSedes();
 	}
 
 	public Sede getSede(String nombre) {
@@ -99,7 +97,6 @@ public class SistemaAlquiler {
 			// El admin ya existe
 			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
 		}
-
 	}
 
 	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) {
@@ -142,65 +139,34 @@ public class SistemaAlquiler {
 
 	}
 
-	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede) {
-		try {
-			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
+	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede)
+			throws IllegalArgumentException, Exception {
+		Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
 
-			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
+		HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
 
-			ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
 
-			Map<String, Sede> mapaSedes = datos.getSedes();
-			if (!mapaSedes.containsKey(nomSede)) {
-				// La sede no existe, agregarla
-				Sede nuevaSede = new Sede(nomSede, ubiSede, hrs, empleados);
-				mapaSedes.put(nomSede, nuevaSede);
-				System.out.println("Nueva sede creada");
-			} else {
-				// La sede ya existe
-				System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
-			}
-
-		} catch (IllegalArgumentException e) {
-			System.out.println("Rango no válido: " + e.getMessage());
-		}
+		// La sede no existe, agregarla
+		Sede nuevaSede = new Sede(nomSede, ubiSede, hrs, empleados);
+		datos.nuevaSede(nuevaSede);
 
 	}
 
-	public void modificarNombreSede(String nuevoNomSede, String actNomSede) {
-		Map<String, Sede> mapaSedes = datos.getSedes();
-		if (mapaSedes.containsKey(actNomSede)) {
-			Sede sedeActual = mapaSedes.get(actNomSede);
-
-			mapaSedes.remove(actNomSede);
-			sedeActual.setNombre(nuevoNomSede);
-			mapaSedes.put(actNomSede, sedeActual);
-			System.out.println("Nombre sede modificado");
-		} else {
-			System.out.println("La sede ingresada no fue encontrada ");
-		}
-
+	public void modificarNombreSede(String nuevoNomSede, String actNomSede) throws Exception {
+		datos.modificarNombreSede(nuevoNomSede, actNomSede);
 	}
 
-	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede) {
-		Map<String, Sede> mapaSedes = datos.getSedes();
-		if (mapaSedes.containsKey(nomSede)) {
-			Sede sedeActual = mapaSedes.get(nomSede);
-			Range<Integer> rangeHrs = new Range<Integer>(hrsASede, hrsCSede);
-			HorarioDeAtencion hrs = new HorarioDeAtencion(rangeHrs);
-			sedeActual.setHorariosDeAtencion(hrs);
-			System.out.println("Horarios de atencion establecidos");
-		} else {
-			System.out.println("La sede ingresada no fue encontrada ");
-		}
+	public void modificarHorarioSede(String nomSede, int hrsASede, int hrsCSede) throws Exception {
+		datos.modificarHorarioSede(nomSede, hrsASede, hrsCSede);
 	}
 
 	public void consultarUbicacionVehiculo(String placa) {
-		if (!datos.getVehiculos().containsKey(placa)) {
+		if (!datos.vehiculoExiste(placa)) {
 			System.out.println("El vehiculo seleccionado no existe");
 			return;
 		}
-		Vehiculo v = datos.getVehiculos().get(placa);
+		Vehiculo v = datos.getVehiculo(placa);
 		if (v.getUbicacion() == null) {
 			System.out.println("El vehiculo esta actualmente alquilado");
 			return;
@@ -209,11 +175,11 @@ public class SistemaAlquiler {
 	}
 
 	public void consultarHistorialVehiculo(String placa) {
-		if (!datos.getVehiculos().containsKey(placa)) {
+		if (!datos.vehiculoExiste(placa)) {
 			System.out.println("El vehiculo seleccionado no existe");
 			return;
 		}
-		Vehiculo v = datos.getVehiculos().get(placa);
+		Vehiculo v = datos.getVehiculo(placa);
 		ArrayList<Reserva> historial = v.getHistorial();
 		if (historial.isEmpty()) {
 			System.out.println("El vehiculo seleccionado no tiene historial");
@@ -297,22 +263,16 @@ public class SistemaAlquiler {
 		}
 	}
 
-	public void AgregarVehiculo(String placa, String marca, String color, String transmision, String categoria,
-			String sede, String estado) {
-		Map<String, Vehiculo> mapaVehiculos = datos.getVehiculos();
-		if (!mapaVehiculos.containsKey(placa)) {
-			// La sede no existe, agregarla
-			LocalDateTime fechaDisponible = null;
-			String comentarios = "vehiculo nuevo";
-			ArrayList<Reserva> historial = null;
-			Vehiculo nuevoVehiculo = new Vehiculo(placa, marca, color, transmision, categoria, sede, fechaDisponible,
-					comentarios, estado, historial);
-			mapaVehiculos.put(placa, nuevoVehiculo);
-			System.out.println("Nuevo vehiculo creada");
-		} else {
-			// La sede ya existe
-			System.out.println("Ya hay un vehiculo registrado con esa placa. Intenta con otro");
-		}
+	public void agregarVehiculo(String placa, String marca, String color, String transmision, String categoria,
+			String sede, String estado) throws Exception {
+		// La sede no existe, agregarla
+		LocalDateTime fechaDisponible = null;
+		String comentarios = "vehiculo nuevo";
+		ArrayList<Reserva> historial = null;
+
+		Vehiculo nuevoVehiculo = new Vehiculo(placa, marca, color, transmision, categoria, sede, fechaDisponible,
+				comentarios, estado, historial);
+		datos.nuevoVehiculo(nuevoVehiculo);
 
 	}
 }
