@@ -183,26 +183,51 @@ public class MenuAdmin {
 					String usuario = input("Nombre usuario");
 					String constraseña = input("Clave usuario");
 					String rol = input("Rol del usuario");
-					sistemaAlquiler.registroEmpleado(usuario, constraseña, rol, sistemaAlquiler.getSede(sedeAdmin));
+					try {
+						sistemaAlquiler.registroEmpleado(usuario, constraseña, rol, sistemaAlquiler.getSede(sedeAdmin));
+						System.out.println("Empleado registrado");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					// agregar usuario a inventario
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2 && sedeAdmin != null) {
 					// eliminar empleado
 					System.out.println("Para remover un empleado ingrese la siguiente informacion: ");
 					String usuario = input("Nombre usuario");
-					sistemaAlquiler.eliminarEmpleado(usuario);
+					try {
+						sistemaAlquiler.eliminarEmpleado(usuario);
+						System.out.println("Empleado eliminado");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 5) {
 					// call consultar ubicacion vehiculo (pedir parametros y llamar funcion)
 					System.out.println("Para consultar la ubicacion de un vehiculo ingrese la siguiente informacion: ");
 					String placa = input("Placa");
-					sistemaAlquiler.consultarUbicacionVehiculo(placa);
+					try {
+						String ubicacion = sistemaAlquiler.consultarUbicacionVehiculo(placa);
+						System.out.println("Ubicacion vehiculo: " + ubicacion);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 6) {
 					// call consultar historial vehiculo (pedir parametros y llamar funcion)
 					System.out.println("Para consultar el historial de un vehiculo ingrese la siguiente informacion: ");
 					String placa = input("Placa");
-					sistemaAlquiler.consultarHistorialVehiculo(placa);
+					try {
+						ArrayList<Reserva> historial = sistemaAlquiler.consultarHistorialVehiculo(placa);
+						System.out.println("Historial vehiculo:");
+						for (Reserva r : historial) {
+							System.out.println(String.format("ID reserva: %d, fecha inicio: %s, fecha final: %s", r.getId(),
+									r.getRangoEntrega().getLow().toLocalDate().toString(),
+									r.getFechaRecogida().toLocalDate().toString()));
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					opcionSeleccionada = 0;
 				}
 

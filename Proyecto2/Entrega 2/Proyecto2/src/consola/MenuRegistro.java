@@ -32,7 +32,7 @@ public class MenuRegistro {
 			if (opcionSeleccionada == 1) {
 				String claveIN = input("Ingrese la clave del sistema");
 				if (claveIN.equals("RegisterAdmin")) // Se define una contraseña arbitraria para que solo quienes la
-														// conozcan puedan registrar administradores
+				// conozcan puedan registrar administradores
 				{
 					ejecutarRegistroAdmin(sistemaAlquiler);
 					sistemaAlquiler.guardarDatos();
@@ -63,7 +63,12 @@ public class MenuRegistro {
 		int sedeInt = Integer.parseInt(input("Ingrese el numero de la sede a la cual se asignara el administrador"));
 		Sede SedeOb = listaSedes.get(sedeInt);
 		String sede = SedeOb.getNombre();
-		sistemaAlquiler.registroAdmin(usuario, clave, sede);
+		try {
+			sistemaAlquiler.registroAdmin(usuario, clave, sede);
+			System.out.println("Admin registrado");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void ejecutarRegistroCliente(SistemaAlquiler sistemaAlquiler) {
@@ -84,9 +89,14 @@ public class MenuRegistro {
 		String fechaVencimientoTarjeta = input("Fecha de vencimiento de su tarjeta de crédito");
 		String cvv = input("cvv");
 
-		sistemaAlquiler.registroCliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
-				nacionalidad, imagenDocumentoIdentidad, numeroLicencia, paisExpedicion, fechaVencimientoLicencia,
-				imagen, numeroTarjeta, fechaVencimientoTarjeta, cvv);
+		try {
+			sistemaAlquiler.registroCliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
+					nacionalidad, imagenDocumentoIdentidad, numeroLicencia, paisExpedicion, fechaVencimientoLicencia,
+					imagen, numeroTarjeta, fechaVencimientoTarjeta, cvv);
+			System.out.println("Cliente registrado");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 

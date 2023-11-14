@@ -104,6 +104,48 @@ public class ContenedorDeDatos implements Serializable {
 		return vehiculos.get(placa);
 	}
 
+	public ArrayList<Vehiculo> getVehiculos() {
+		return new ArrayList<Vehiculo>(vehiculos.values());
+	}
+
+	public boolean adminExiste(String usuario) {
+		return admins.containsKey(usuario);
+	}
+
+	public void nuevoAdmin(Admin admin) throws Exception {
+		if (adminExiste(admin.usuario))
+			throw new Exception("Ya existe un admin con este usuario");
+		admins.put(admin.usuario, admin);
+	}
+
+	public boolean empleadoExiste(String usuario) {
+		return empleados.containsKey(usuario);
+	}
+
+	public void nuevoEmpleado(Empleado empleado) throws Exception {
+		if (empleadoExiste(empleado.usuario))
+			throw new Exception("Ya existe un empleado con este usuario");
+		this.empleados.put(empleado.usuario, empleado);
+	}
+
+	public void eliminarEmpleado(String usuario) throws Exception {
+		if (!empleadoExiste(usuario)) {
+			throw new Exception("El empleado seleccionado no existe");
+		}
+		this.empleados.remove(usuario);
+	}
+
+	public boolean clienteExiste(String usuario) {
+		return clientes.containsKey(usuario);
+	}
+
+	public void nuevoCliente(Cliente cliente) throws Exception {
+		if (clienteExiste(cliente.usuario)) {
+			throw new Exception("El nombre de usuario ya esta en uso. Intenta con otro");
+		}
+		clientes.put(cliente.usuario, cliente);
+	}
+
 	/*
 	 * getters
 	 */
@@ -132,18 +174,6 @@ public class ContenedorDeDatos implements Serializable {
 		return usuarios;
 	}
 
-	public Inventario getInventario() {
-		return inventario;
-	}
-
-	public Map<String, Cliente> getClientes() {
-		return clientes;
-	}
-
-	public Map<String, Admin> getAdmins() {
-		return admins;
-	}
-
 	public ArrayList<Seguro> getSeguros() {
 		return seguros;
 	}
@@ -152,12 +182,19 @@ public class ContenedorDeDatos implements Serializable {
 		return sedes.get(nombre);
 	}
 
-	public Map<String, Reserva> getReservas() {
-		return reservas;
+	public boolean reservaExiste(String id) {
+		return reservas.containsKey(id);
 	}
 
-	public Map<String, Empleado> getEmpleados() {
-		return empleados;
+	public void nuevaReserva(Reserva r) throws Exception {
+		if (reservaExiste(r.getId())) {
+			throw new Exception("El id de la reserva ya esta en uso.");
+		}
+		reservas.put(r.getId(), r);
+	}
+
+	public Reserva getReserva(String id) {
+		return reservas.get(id);
 	}
 
 	/*

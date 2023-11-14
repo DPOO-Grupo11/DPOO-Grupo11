@@ -86,57 +86,43 @@ public class SistemaAlquiler {
 		return datos.getSede(nombre);
 	}
 
-	public void registroAdmin(String usuario, String clave, String sede) {
-		Map<String, Admin> mapaAdmins = datos.getAdmins();
-		if (!mapaAdmins.containsKey(usuario)) {
-			// El admin no existe, agregarlo
-			Admin nuevoAdmin = new Admin(usuario, clave, sede);
-			mapaAdmins.put(usuario, nuevoAdmin);
-			System.out.println("Admin registrado");
-		} else {
-			// El admin ya existe
-			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+	public void registroAdmin(String usuario, String clave, String sede) throws Exception {
+		if (!datos.adminExiste(usuario)) {
+			throw new Exception("El nombre de usuario ya esta en uso. Intenta con otro");
 		}
+		// El admin no existe, agregarlo
+		Admin nuevoAdmin = new Admin(usuario, clave, sede);
+		datos.nuevoAdmin(nuevoAdmin);
 	}
 
-	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) {
+	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) throws Exception {
 		Empleado empleado = new Empleado(usuario, clave, rol, sede);
-		if (datos.getEmpleados().containsKey(usuario)) {
-			System.out.println("ya existe un usuario con este nombre, intente con otro");
-			return;
+		if (datos.empleadoExiste(usuario)) {
+			throw new Exception("Ya existe un usuario con este nombre, intente con otro");
 		}
-		datos.getEmpleados().put(usuario, empleado);
-		System.out.println("Empleado registrado");
+		datos.nuevoEmpleado(empleado);
+
 	}
 
-	public void eliminarEmpleado(String usuario) {
-		if (!datos.getEmpleados().containsKey(usuario)) {
-			System.out.println("el usuario seleccionado no existe");
-			return;
-		}
-		datos.getEmpleados().remove(usuario);
-		System.out.println("Empleado eliminado");
+	public void eliminarEmpleado(String usuario) throws Exception {
+		datos.eliminarEmpleado(usuario);
 	}
 
 	public void registroCliente(String usuario, String clave, String nombres, String numeroTelefono, String direccion,
 			String fechaNacimiento, String nacionalidad, String imagenDocumentoIdentidad, String numeroLicencia,
 			String paisExpedicion, String fechaVencimientoLicencia, String imagen, String numeroTarjeta,
-			String fechaVencimientoTarjeta, String cvv) {
-		Map<String, Cliente> mapaClientes = datos.getClientes();
-		if (!mapaClientes.containsKey(usuario)) {
-			// El cliente no existe, agregarlo
-			LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion,
-					fechaVencimientoLicencia, imagen);
-			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(numeroTarjeta, fechaVencimientoTarjeta, cvv);
-			Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
-					nacionalidad, imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
-			mapaClientes.put(usuario, nuevoCliente);
-			System.out.println("Cliente registrado");
-		} else {
-			// El cliente ya existe
-			System.out.println("El nombre de usuario ya esta en uso. Intenta con otro");
+			String fechaVencimientoTarjeta, String cvv) throws Exception {
+		if (datos.clienteExiste(usuario)) {
+			throw new Exception("El nombre de usuario ya esta en uso. Intenta con otro");
 		}
 
+		// El cliente no existe, agregarlo
+		LicenciaDeConduccion licencia = new LicenciaDeConduccion(numeroLicencia, paisExpedicion,
+				fechaVencimientoLicencia, imagen);
+		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(numeroTarjeta, fechaVencimientoTarjeta, cvv);
+		Cliente nuevoCliente = new Cliente(usuario, clave, nombres, numeroTelefono, direccion, fechaNacimiento,
+				nacionalidad, imagenDocumentoIdentidad, licencia, tarjetaDeCredito);
+		datos.nuevoCliente(nuevoCliente);
 	}
 
 	public void crearSede(String nomSede, String ubiSede, int hrsASede, int hrsCSede)
@@ -161,37 +147,27 @@ public class SistemaAlquiler {
 		datos.modificarHorarioSede(nomSede, hrsASede, hrsCSede);
 	}
 
-	public void consultarUbicacionVehiculo(String placa) {
+	public String consultarUbicacionVehiculo(String placa) throws Exception {
 		if (!datos.vehiculoExiste(placa)) {
-			System.out.println("El vehiculo seleccionado no existe");
-			return;
+			throw new Exception("El vehiculo seleccionado no existe");
 		}
 		Vehiculo v = datos.getVehiculo(placa);
 		if (v.getUbicacion() == null) {
-			System.out.println("El vehiculo esta actualmente alquilado");
-			return;
+			throw new Exception("El vehiculo esta actualmente alquilado");
 		}
-		System.out.println("Ubicacion vehiculo: " + v.getUbicacion());
+		return v.getUbicacion();
 	}
 
-	public void consultarHistorialVehiculo(String placa) {
+	public ArrayList<Reserva> consultarHistorialVehiculo(String placa) throws Exception {
 		if (!datos.vehiculoExiste(placa)) {
-			System.out.println("El vehiculo seleccionado no existe");
-			return;
+			throw new Exception("El vehiculo seleccionado no existe");
 		}
 		Vehiculo v = datos.getVehiculo(placa);
 		ArrayList<Reserva> historial = v.getHistorial();
 		if (historial.isEmpty()) {
-			System.out.println("El vehiculo seleccionado no tiene historial");
-			return;
+			throw new Exception("El vehiculo seleccionado no tiene historial");
 		}
-		System.out.println("Historial vehiculo:");
-		for (Reserva r : historial) {
-			System.out.println(String.format("ID reserva: %d, fecha inicio: %s, fecha final: %s", r.getId(),
-					r.getRangoEntrega().getLow().toLocalDate().toString(),
-					r.getFechaRecogida().toLocalDate().toString()));
-		}
-
+		return historial;
 	}
 
 	public void crearReserva(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
@@ -200,48 +176,48 @@ public class SistemaAlquiler {
 		Tarifa tarifa = Inventario.tarifas.get(categoriaSolicitada);
 		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
 				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
-		datos.getReservas().put(r.getId(), r);
-		System.out.println("Reserva creada");
+		try {
+			datos.nuevaReserva(r);
+			System.out.println("Reserva creada exitosamente.");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
-	public void modificarReserva(String idReserva, LocalDateTime fechaRecogida, Range<LocalDateTime> rangoEntrega) {
-		if (!datos.getReservas().containsKey(idReserva)) {
-			System.out.println("La reserva seleccionada no existe");
-			return;
+	public void modificarReserva(String idReserva, LocalDateTime fechaRecogida, Range<LocalDateTime> rangoEntrega)
+			throws Exception {
+		if (!datos.reservaExiste(idReserva)) {
+			throw new Exception("La reserva seleccionada no existe");
 		}
-		Reserva r = datos.getReservas().get(idReserva);
+		Reserva r = datos.getReserva(idReserva);
 		if (r.getVehiculo() != null) {
-			System.out.println("Esta reserva ya es un alquiler en curso, no se puede modificar");
-			return;
+			throw new Exception("Esta reserva ya es un alquiler en curso, no se puede modificar");
 		}
 		r.setFechaRecogida(fechaRecogida);
 		r.setRangoEntrega(rangoEntrega);
-		System.out.println("Los cambios fueron realizados");
 	}
 
 	public void crearAlquiler(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
 			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
-			ArrayList<LicenciaDeConduccion> conductoresExtra) {
+			ArrayList<LicenciaDeConduccion> conductoresExtra) throws Exception {
 
 		Tarifa tarifa = Inventario.tarifas.get(categoriaSolicitada);
 		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
 				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
-		datos.getReservas().put(r.getId(), r);
+		datos.nuevaReserva(r);
 		formalizarAlquiler(r.getId());
-		System.out.println("Alquiler creado");
 	}
 
-	public void formalizarAlquiler(String idReserva) {
-		if (!datos.getReservas().containsKey(idReserva)) {
-			System.out.println("La reserva seleccionada no existe");
-			return;
+	public void formalizarAlquiler(String idReserva) throws Exception {
+		if (!datos.reservaExiste(idReserva)) {
+			throw new Exception("La reserva seleccionada no existe");
 		}
-		Reserva r = datos.getReservas().get(idReserva);
+		Reserva r = datos.getReserva(idReserva);
 		// encontrar vehiculo disponible
 		String categoria = r.getCategoriaSolicitada();
 		Vehiculo vehiculoEncontrado = null;
 		while (vehiculoEncontrado == null) {
-			for (Vehiculo v : datos.getVehiculos().values()) {
+			for (Vehiculo v : datos.getVehiculos()) {
 				if (v.getCategoria() == categoria
 						&& (v.getFechaDisponible().compareTo(r.getRangoEntrega().getLow()) <= 0)) {
 					// actualizar vehiculo
@@ -249,15 +225,13 @@ public class SistemaAlquiler {
 					v.setEstado("alquilado");
 					v.setFechaDisponible(r.getFechaRecogida());
 					r.setVehiculo(v);
-					System.out.println("Alquiler formalizado, se asigno un vehiculo");
 					return;
 				}
 			}
 			int i = Inventario.prioridadCategoria.indexOf(categoria);
 			i += 1;
 			if (i >= Inventario.prioridadCategoria.size()) {
-				System.out.println("No existen vehiculos disponibles en este momento");
-				return;
+				throw new Exception("No existen vehiculos disponibles en este momento");
 			}
 			categoria = Inventario.prioridadCategoria.get(i);
 		}

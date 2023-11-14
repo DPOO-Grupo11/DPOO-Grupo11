@@ -76,6 +76,7 @@ public class MenuCliente {
 					}
 					sistemaAlquiler.crearReserva(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
 							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
+					System.out.println("Reserva creada");
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2) {
 					// call modificar reserva
@@ -90,7 +91,13 @@ public class MenuCliente {
 					LocalDateTime fechaEntregaTarde = LocalDateTime.parse(entregaTarde, formatter);
 					Range<LocalDateTime> rangoEntrega = new Range<LocalDateTime>(fechaEntregaTemprano,
 							fechaEntregaTarde);
-					sistemaAlquiler.modificarReserva(idReserva, fechaRecogida, rangoEntrega);
+					try {
+						sistemaAlquiler.modificarReserva(idReserva, fechaRecogida, rangoEntrega);
+						System.out.println("Los cambios fueron realizados");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 3) {
 					System.out.println("Cerrando sesión ...");

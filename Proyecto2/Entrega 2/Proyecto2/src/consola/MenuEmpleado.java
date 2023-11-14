@@ -38,7 +38,12 @@ public class MenuEmpleado {
 				if (opcionSeleccionada == 1) {
 					System.out.println("Para formalizar un alquiler ingrese la siguiente informacion: ");
 					String idReserva = input("idReserva");
-					sistemaAlquiler.formalizarAlquiler(idReserva);
+					try {
+						sistemaAlquiler.formalizarAlquiler(idReserva);
+						System.out.println("Alquiler formalizado, se asigno un vehiculo");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 1) {
 					System.out.println("Para crear un alquiler ingrese la siguiente informacion: ");
@@ -77,8 +82,13 @@ public class MenuEmpleado {
 						}
 						agregarMas = input("Agregar mas conductores extra? (si/no)").equals("si");
 					}
-					sistemaAlquiler.crearAlquiler(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
-							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
+					try {
+						sistemaAlquiler.crearAlquiler(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
+								ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
+						System.out.println("Alquiler creado");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 3) {
 					// cerrar sesion
