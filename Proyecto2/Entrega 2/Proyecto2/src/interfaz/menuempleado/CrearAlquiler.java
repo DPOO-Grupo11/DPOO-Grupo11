@@ -10,7 +10,7 @@ import interfaz.componentes.Boton;
 public class CrearAlquiler extends JPanel {
   public CrearAlquiler() {
     setLayout(new GridBagLayout());
-    add(new Boton(TOOL_TIP_TEXT_KEY, e -> {
+    add(new Boton("Categoria", () -> {
       return null;
     }),
         new GridBagConstraints(0, 0,
