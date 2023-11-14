@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import clases.Empleado;
 import clases.SistemaAlquiler;
 import interfaz.Navegador;
+import interfaz.componentes.Boton;
 
 public class MenuEmpleado extends JPanel {
   private final Navegador nav;
@@ -32,17 +33,5 @@ public class MenuEmpleado extends JPanel {
       nav.paginaAnterior();
       return null;
     }));
-  }
-}
-
-class Boton extends JButton {
-  Boton(String texto, Callable<Void> action) {
-    addActionListener(e -> {
-      try {
-        action.call();
-      } catch (Exception e1) {
-        e1.printStackTrace();
-      }
-    });
   }
 }

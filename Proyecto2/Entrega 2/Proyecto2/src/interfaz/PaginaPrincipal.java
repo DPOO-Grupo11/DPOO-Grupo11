@@ -27,9 +27,9 @@ public class PaginaPrincipal extends JFrame {
   public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLayout(new BorderLayout());
-    navegador = new Navegador();
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
+    navegador = new Navegador(usuario, navegador, sistemaAlquiler);
     add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
       if (usuario instanceof Admin) {
