@@ -23,7 +23,7 @@ import clases.Usuario;
 public class PaginaPrincipal extends JFrame {
 
   private Usuario usuario;
-  private Navegador navegador;
+  private final Navegador navegador;
 
   public static Navegador getNavegador() {
     return (Navegador) Window.getWindows()[0].getComponents()[0];
@@ -53,33 +53,4 @@ public class PaginaPrincipal extends JFrame {
     pp.setResizable(false);
     pp.setVisible(true);
   }
-}
-
-/**
- * se encarga de agregar y quitar paginas
- */
-class Navegador extends JLayeredPane {
-  private int indicePagina;
-
-  public Navegador() {
-    setLayout(new BorderLayout());
-    this.indicePagina = 0;
-    add(new Login(), indicePagina);
-  }
-
-  void agregarPagina(JPanel panel) {
-    getComponentsInLayer(indicePagina)[0].setVisible(false);
-    indicePagina++;
-    add(panel, indicePagina);
-  }
-
-  void removerUltimaPagina() {
-    if (indicePagina <= 0) {
-      return;
-    }
-    remove(indicePagina);
-    indicePagina--;
-    getComponentsInLayer(indicePagina)[0].setVisible(true);
-  }
-
 }
