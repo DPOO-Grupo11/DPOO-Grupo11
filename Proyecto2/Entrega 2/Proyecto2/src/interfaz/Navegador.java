@@ -18,15 +18,12 @@ public class Navegador extends JLayeredPane {
   private int indicePagina;
 
   private Usuario usuario;
-  private final Navegador navegador;
   private final SistemaAlquiler sistemaAlquiler;
 
   public Navegador(
       Usuario usuario,
-      Navegador navegador,
       SistemaAlquiler sistemaAlquiler) {
     this.usuario = usuario;
-    this.navegador = navegador;
     this.sistemaAlquiler = sistemaAlquiler;
     setLayout(new BorderLayout());
     this.indicePagina = 0;

@@ -29,7 +29,7 @@ public class PaginaPrincipal extends JFrame {
     setLayout(new BorderLayout());
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
-    navegador = new Navegador(usuario, navegador, sistemaAlquiler);
+    navegador = new Navegador(usuario, sistemaAlquiler);
     add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
       if (usuario instanceof Admin) {
