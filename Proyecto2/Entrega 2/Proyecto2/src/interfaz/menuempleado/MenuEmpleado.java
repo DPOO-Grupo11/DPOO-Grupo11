@@ -21,9 +21,11 @@ public class MenuEmpleado extends JPanel {
     this.sistemaAlquiler = sistemaAlquiler;
     setLayout(new BoxLayout(this.getRootPane(), BoxLayout.Y_AXIS));
     add(new Boton("Formalizar Alquiler", () -> {
+      nav.agregarPagina(new FormalizarAlquiler());
       return null;
     }));
     add(new Boton("Crear Alquiler", () -> {
+      nav.agregarPagina(new CrearAlquiler());
       return null;
     }));
     add(new Boton("Cerrar Sesion", () -> {

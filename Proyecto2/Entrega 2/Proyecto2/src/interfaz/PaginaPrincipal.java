@@ -1,20 +1,18 @@
 package interfaz;
 
-import interfaz.registro.Login;
 import interfaz.menuadmin.*;
 import interfaz.menucliente.*;
 import interfaz.menuempleado.*;
 
 import java.awt.BorderLayout;
-import java.awt.Window;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-
 import clases.Admin;
+import clases.Cliente;
 import clases.Empleado;
+import clases.SistemaAlquiler;
 import clases.Usuario;
 
 /**
@@ -24,21 +22,20 @@ public class PaginaPrincipal extends JFrame {
 
   private Usuario usuario;
   private final Navegador navegador;
+  private final SistemaAlquiler sistemaAlquiler;
 
-  public static Navegador getNavegador() {
-    return (Navegador) Window.getWindows()[0].getComponents()[0];
-  }
-
-  public PaginaPrincipal() {
+  public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLayout(new BorderLayout());
     navegador = new Navegador();
+    sistemaAlquiler = new SistemaAlquiler();
+    sistemaAlquiler.cargarDatos();
     add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
       if (usuario instanceof Admin) {
         navegador.agregarPagina(new MenuAdmin());
       } else if (usuario instanceof Empleado) {
-        navegador.agregarPagina(new MenuEmpleado());
+        navegador.agregarPagina(new MenuEmpleado(navegador, sistemaAlquiler, (Empleado) usuario));
       } else if (usuario instanceof Cliente) {
         navegador.agregarPagina(new MenuCliente());
       }
@@ -47,10 +44,17 @@ public class PaginaPrincipal extends JFrame {
   }
 
   public static void main(String[] args) {
-    PaginaPrincipal pp = new PaginaPrincipal();
-    pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    // pp.setUndecorated(true);
-    pp.setResizable(false);
-    pp.setVisible(true);
+    PaginaPrincipal pp;
+    try {
+      pp = new PaginaPrincipal();
+      pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      // pp.setUndecorated(true);
+      pp.setResizable(false);
+      pp.setVisible(true);
+    } catch (ClassNotFoundException | IOException e) {
+      System.out.println("Carga de datos fallida");
+      e.printStackTrace();
+
+    }
   }
 }
