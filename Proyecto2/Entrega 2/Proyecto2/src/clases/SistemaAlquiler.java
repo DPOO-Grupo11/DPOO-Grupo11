@@ -172,16 +172,11 @@ public class SistemaAlquiler {
 
 	public void crearReserva(String categoriaSolicitada, LocalDateTime fechaRecogida, String ubicacionRecogida,
 			String ubicacionEntrega, Range<LocalDateTime> rangoEntrega, Cliente cliente,
-			ArrayList<LicenciaDeConduccion> conductoresExtra) {
+			ArrayList<LicenciaDeConduccion> conductoresExtra) throws Exception {
 		Tarifa tarifa = Inventario.tarifas.get(categoriaSolicitada);
 		Reserva r = new Reserva(datos.nuevoIdReservas(), categoriaSolicitada, fechaRecogida, ubicacionRecogida,
 				ubicacionEntrega, rangoEntrega, cliente, null, conductoresExtra, tarifa);
-		try {
-			datos.nuevaReserva(r);
-			System.out.println("Reserva creada exitosamente.");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		datos.nuevaReserva(r);
 	}
 
 	public void modificarReserva(String idReserva, LocalDateTime fechaRecogida, Range<LocalDateTime> rangoEntrega)

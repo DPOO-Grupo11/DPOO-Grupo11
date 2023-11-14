@@ -74,8 +74,14 @@ public class MenuCliente {
 						}
 						agregarMas = input("Agregar mas conductores extra? (si/no)").equals("si");
 					}
-					sistemaAlquiler.crearReserva(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
-							ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
+					try {
+						sistemaAlquiler.crearReserva(categoriaSolicitada, fechaRecogida, ubicacionRecogida,
+								ubicacionEntrega, rangoEntrega, cliente, conductoresExtra);
+						System.out.println("Reserva creada exitosamente.");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+
 					System.out.println("Reserva creada");
 					opcionSeleccionada = 0;
 				} else if (opcionSeleccionada == 2) {
