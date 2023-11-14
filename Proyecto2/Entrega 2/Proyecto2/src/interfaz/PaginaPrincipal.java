@@ -55,6 +55,9 @@ public class PaginaPrincipal extends JFrame {
   }
 }
 
+/**
+ * se encarga de agregar y quitar paginas
+ */
 class Navegador extends JLayeredPane {
   private int indicePagina;
 
@@ -65,6 +68,7 @@ class Navegador extends JLayeredPane {
   }
 
   void agregarPagina(JPanel panel) {
+    getComponentsInLayer(indicePagina)[0].setVisible(false);
     indicePagina++;
     add(panel, indicePagina);
   }
@@ -75,6 +79,7 @@ class Navegador extends JLayeredPane {
     }
     remove(indicePagina);
     indicePagina--;
+    getComponentsInLayer(indicePagina)[0].setVisible(true);
   }
 
 }
