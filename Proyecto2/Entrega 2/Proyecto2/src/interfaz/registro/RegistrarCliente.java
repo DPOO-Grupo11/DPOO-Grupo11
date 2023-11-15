@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import clases.SistemaAlquiler;
@@ -24,27 +25,27 @@ public class RegistrarCliente extends JPanel {
     JPanel pi = new JPanel();
     pi.setLayout(new BoxLayout(pi, BoxLayout.Y_AXIS));
     // nombre
-    pi.add(new Texto("Nombre y Apellido", false));
+    pi.add(new JLabel("Nombre y Apellido"));
     pi.add(new Texto("Nombre y Apellido", true));
     // numero
-    pi.add(new Texto("Numero Telefonico", false));
+    pi.add(new JLabel("Numero Telefonico"));
     pi.add(new Texto("Numero Telefonico", true));
     // direccion
-    pi.add(new Texto("Direccion", false));
+    pi.add(new JLabel("Direccion"));
     pi.add(new Texto("Direccion", true));
     // correo
-    pi.add(new Texto("Correo", false));
+    pi.add(new JLabel("Correo"));
     pi.add(new Texto("Correo", true));
     // licencia
-    pi.add(new Texto("Licencia", false));
+    pi.add(new JLabel("Licencia"));
     pi.add(new Texto("Licencia", true));
     // Cedula
-    pi.add(new Texto("Cedula", false));
+    pi.add(new JLabel("Cedula"));
     pi.add(new Texto("Cedula", true));
     // panel derecho
     JPanel pd = new JPanel();
     pd.setLayout(new BorderLayout());
-    //pd.add(new MostrarYEscogerImagen(), BorderLayout.CENTER);
+    // pd.add(new MostrarYEscogerImagen(), BorderLayout.CENTER);
     JPanel box = new JPanel();
     box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
     pd.add(box, BorderLayout.SOUTH);

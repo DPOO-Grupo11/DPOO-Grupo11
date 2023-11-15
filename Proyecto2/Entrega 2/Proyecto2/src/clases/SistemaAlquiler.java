@@ -20,9 +20,16 @@ public class SistemaAlquiler {
 		cargarDatos();
 	}
 
-	// FIXME: esta funcion esta unicamente para pruebas
-	public Empleado getPrimerEmpleado() {
-		return datos.getPrimerEmpleado();
+	public boolean sesionIniciada() {
+		return datos.sesionIniciada();
+	}
+
+	public void establecerUsuario(Usuario u) {
+		datos.establecerUsuario(u);
+	}
+
+	public Usuario getUsuarioActual() {
+		return datos.getUsuarioActual();
 	}
 
 	/*

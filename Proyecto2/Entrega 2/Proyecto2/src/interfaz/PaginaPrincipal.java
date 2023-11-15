@@ -3,11 +3,12 @@ package interfaz;
 import interfaz.menuadmin.*;
 import interfaz.menucliente.*;
 import interfaz.menuempleado.*;
-import interfaz.registro.Login;
+import interfaz.registro.LandingPage;
 import interfaz.registro.RegistrarCliente;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -23,7 +24,6 @@ import clases.Usuario;
  */
 public class PaginaPrincipal extends JFrame {
 
-  private Usuario usuario;
   private final Navegador nav;
   private final SistemaAlquiler sistemaAlquiler;
 
@@ -35,28 +35,16 @@ public class PaginaPrincipal extends JFrame {
     setOpacity(1f);
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
-    nav = new Navegador(usuario, sistemaAlquiler);
-    add(new RegistrarCliente(nav, sistemaAlquiler));
-    // add(navegador, BorderLayout.CENTER);
-    if (usuario != null) {
-      System.out.println("sesion iniciada abriendo menu correspondiente");
-      if (usuario instanceof Admin) {
-        nav.agregarPagina(new MenuAdmin(nav, sistemaAlquiler, (Admin) usuario));
-      } else if (usuario instanceof Empleado) {
-        nav.agregarPagina(new MenuEmpleado(nav, sistemaAlquiler, (Empleado) usuario));
-      } else if (usuario instanceof Cliente) {
-        nav.agregarPagina(new MenuCliente());
-      }
-    } else {
-      System.out.println("sesion no iniciada");
-    }
+    nav = new Navegador(sistemaAlquiler);
+    add(nav, BorderLayout.CENTER);
   }
 
   public static void main(String[] args) {
     try {
       PaginaPrincipal pp = new PaginaPrincipal();
-      pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
-      pp.setResizable(false);
+      // pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      pp.setResizable(true);
+      pp.setSize(new Dimension(500, 500));
       pp.setVisible(true);
       // pp.setUndecorated(true);
     } catch (ClassNotFoundException | IOException e) {
