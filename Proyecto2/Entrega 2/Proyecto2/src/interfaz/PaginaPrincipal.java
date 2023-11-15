@@ -23,7 +23,7 @@ import clases.Usuario;
 public class PaginaPrincipal extends JFrame {
 
   private Usuario usuario;
-  private final Navegador navegador;
+  private final Navegador nav;
   private final SistemaAlquiler sistemaAlquiler;
 
   public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -34,17 +34,17 @@ public class PaginaPrincipal extends JFrame {
     setOpacity(1f);
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
-    navegador = new Navegador(usuario, sistemaAlquiler);
-    add(new Login());
+    nav = new Navegador(usuario, sistemaAlquiler);
+    add(new Login(nav, sistemaAlquiler));
     // add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
       System.out.println("sesion iniciada abriendo menu correspondiente");
       if (usuario instanceof Admin) {
-        navegador.agregarPagina(new MenuAdmin());
+        nav.agregarPagina(new MenuAdmin());
       } else if (usuario instanceof Empleado) {
-        navegador.agregarPagina(new MenuEmpleado(navegador, sistemaAlquiler, (Empleado) usuario));
+        nav.agregarPagina(new MenuEmpleado(nav, sistemaAlquiler, (Empleado) usuario));
       } else if (usuario instanceof Cliente) {
-        navegador.agregarPagina(new MenuCliente());
+        nav.agregarPagina(new MenuCliente());
       }
     } else {
       System.out.println("sesion no iniciada");

@@ -1,10 +1,8 @@
 package interfaz.menuempleado;
 
 import java.awt.Color;
-import java.util.concurrent.Callable;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import clases.Empleado;

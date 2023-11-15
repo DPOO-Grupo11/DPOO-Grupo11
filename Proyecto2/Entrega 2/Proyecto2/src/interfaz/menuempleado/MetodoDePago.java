@@ -10,7 +10,7 @@ import clases.Inventario;
 import interfaz.componentes.Combo;
 import interfaz.componentes.Texto;
 
-class MetodoDePago extends JFrame {
+public class MetodoDePago extends JFrame {
   public MetodoDePago() {
     setDefaultCloseOperation(ABORT);
     setLayout(new GridBagLayout());

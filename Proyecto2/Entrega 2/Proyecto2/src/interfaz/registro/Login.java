@@ -5,7 +5,6 @@ import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import clases.Empleado;
 import clases.SistemaAlquiler;
 import interfaz.Navegador;
 import interfaz.componentes.Boton;
