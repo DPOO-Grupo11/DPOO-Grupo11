@@ -12,7 +12,7 @@ public class CSVReader {
 	private SistemaAlquiler SA;
 	private ContenedorDeDatos CD;
 	
-	public CSVReader(SistemaAlquiler SA,ContenedorDeDatos CD) {
+	public CSVReader(SistemaAlquiler SA,ContenedorDeDatos CD) throws FileNotFoundException, IOException {
 		this.SA=SA;
 		this.CD=CD;
 		
