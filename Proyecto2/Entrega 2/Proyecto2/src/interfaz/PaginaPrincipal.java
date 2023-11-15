@@ -41,7 +41,7 @@ public class PaginaPrincipal extends JFrame {
     if (usuario != null) {
       System.out.println("sesion iniciada abriendo menu correspondiente");
       if (usuario instanceof Admin) {
-        nav.agregarPagina(new MenuAdmin());
+        nav.agregarPagina(new MenuAdmin(nav, sistemaAlquiler, (Admin) usuario));
       } else if (usuario instanceof Empleado) {
         nav.agregarPagina(new MenuEmpleado(nav, sistemaAlquiler, (Empleado) usuario));
       } else if (usuario instanceof Cliente) {
