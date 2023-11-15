@@ -29,7 +29,7 @@ public class LandingPage extends JPanel {
       return null;
     });
     Boton registrarEmpleado = new Boton("Registrar Empleado", () -> {
-      nav.agregarPagina(new RegistrarEmpleado());
+      nav.agregarPagina(new RegistrarEmpleado(nav, sistemaAlquiler));
       return null;
     });
     // iniciarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);

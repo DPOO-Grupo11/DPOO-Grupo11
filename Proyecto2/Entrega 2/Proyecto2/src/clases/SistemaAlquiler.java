@@ -102,13 +102,13 @@ public class SistemaAlquiler {
 		datos.nuevoAdmin(nuevoAdmin);
 	}
 
-	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) throws Exception {
-		Empleado empleado = new Empleado(usuario, clave, rol, sede);
+	public Empleado registroEmpleado(String usuario, String clave, String rol, Sede sede) throws Exception {
 		if (datos.empleadoExiste(usuario)) {
 			throw new Exception("Ya existe un usuario con este nombre, intente con otro");
 		}
+		Empleado empleado = new Empleado(usuario, clave, rol, sede);
 		datos.nuevoEmpleado(empleado);
-
+		return empleado;
 	}
 
 	public void eliminarEmpleado(String usuario) throws Exception {

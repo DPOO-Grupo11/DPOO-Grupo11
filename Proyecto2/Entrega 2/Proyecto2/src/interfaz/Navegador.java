@@ -29,6 +29,7 @@ public class Navegador extends JPanel {
   private final SistemaAlquiler sistemaAlquiler;
 
   private ArrayList<JPanel> paneles;
+  private CardLayout card;
 
   public Navegador(
       SistemaAlquiler sistemaAlquiler) {
@@ -39,10 +40,12 @@ public class Navegador extends JPanel {
     // amarillo
     setBackground(new Color(255, 255, 0));
     setOpaque(true);
-    setLayout(new CardLayout());
+    card = new CardLayout();
+    setLayout(card);
     setSize(new Dimension(25, 25));
 
     add(new LandingPage(this, sistemaAlquiler));
+    card.last(this);
     login();
     // if (modoPruebaActivado) {
     // // TODO: aca agregar paginas que se van a probar
@@ -53,6 +56,7 @@ public class Navegador extends JPanel {
   public void agregarPagina(JPanel panel) {
     paneles.add(panel);
     add(panel);
+    card.last(this);
   }
 
   public void paginaAnterior() {
