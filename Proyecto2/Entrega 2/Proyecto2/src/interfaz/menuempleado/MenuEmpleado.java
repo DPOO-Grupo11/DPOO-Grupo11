@@ -1,5 +1,6 @@
 package interfaz.menuempleado;
 
+import java.awt.Color;
 import java.util.concurrent.Callable;
 
 import javax.swing.BoxLayout;
@@ -20,13 +21,15 @@ public class MenuEmpleado extends JPanel {
     this.nav = nav;
     this.empleado = empleado;
     this.sistemaAlquiler = sistemaAlquiler;
-    setLayout(new BoxLayout(this.getRootPane(), BoxLayout.Y_AXIS));
+    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    // rojo
+    setBackground(new Color(255, 0, 0));
     add(new Boton("Formalizar Alquiler", () -> {
       nav.agregarPagina(new FormalizarAlquiler());
       return null;
     }));
     add(new Boton("Crear Alquiler", () -> {
-      nav.agregarPagina(new CrearAlquiler());
+      nav.agregarPagina(new CrearAlquiler(empleado, nav, sistemaAlquiler));
       return null;
     }));
     add(new Boton("Cerrar Sesion", () -> {

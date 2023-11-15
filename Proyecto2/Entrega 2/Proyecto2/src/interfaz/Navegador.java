@@ -1,14 +1,13 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import clases.SistemaAlquiler;
 import clases.Usuario;
-import interfaz.menucliente.MenuCliente;
-import interfaz.registro.Login;
 
 /**
  * se encarga de agregar y quitar paginas
@@ -25,17 +24,19 @@ public class Navegador extends JLayeredPane {
       SistemaAlquiler sistemaAlquiler) {
     this.usuario = usuario;
     this.sistemaAlquiler = sistemaAlquiler;
-    setLayout(new BorderLayout());
-    this.indicePagina = 0;
-    add(new Login(), indicePagina);
-    if (modoPruebaActivado) {
-      // TODO: aca agregar paginas que se van a probar
-      add(new MenuCliente());
-    }
+    this.indicePagina = 1;
+    // amarillo
+    setBackground(new Color(255, 255, 0));
+    setOpaque(true);
+    // add(new Login(), indicePagina);
+    // if (modoPruebaActivado) {
+    // // TODO: aca agregar paginas que se van a probar
+    // agregarPagina(new MenuEmpleado(this, sistemaAlquiler, null));
+    // }
   }
 
   public void agregarPagina(JPanel panel) {
-    getComponentsInLayer(indicePagina)[0].setVisible(false);
+    // getComponentsInLayer(indicePagina)[0].setVisible(false);
     indicePagina++;
     add(panel, indicePagina);
   }

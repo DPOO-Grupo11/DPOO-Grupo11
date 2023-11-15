@@ -32,6 +32,11 @@ public class ContenedorDeDatos implements Serializable {
 	// se utiliza como id para las reservas
 	private int contadorReservas = 0;
 
+	// FIXME: esta funcion esta unicamente para pruebas
+	public Empleado getPrimerEmpleado() {
+		return empleados.values().iterator().next();
+	}
+
 	public ContenedorDeDatos() {
 		this.usuario = null;
 		this.adminGeneral = new Admin("AdministradorGen", "SenecaDPOO");

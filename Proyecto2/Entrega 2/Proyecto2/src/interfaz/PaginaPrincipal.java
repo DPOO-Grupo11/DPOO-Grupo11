@@ -3,8 +3,10 @@ package interfaz;
 import interfaz.menuadmin.*;
 import interfaz.menucliente.*;
 import interfaz.menuempleado.*;
+import interfaz.registro.Login;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -27,11 +29,16 @@ public class PaginaPrincipal extends JFrame {
   public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLayout(new BorderLayout());
+    // rosado
+    setBackground(new Color(255, 192, 203));
+    setOpacity(1f);
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
     navegador = new Navegador(usuario, sistemaAlquiler);
-    add(navegador, BorderLayout.CENTER);
+    add(new Login());
+    // add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
+      System.out.println("sesion iniciada abriendo menu correspondiente");
       if (usuario instanceof Admin) {
         navegador.agregarPagina(new MenuAdmin());
       } else if (usuario instanceof Empleado) {
@@ -39,22 +46,21 @@ public class PaginaPrincipal extends JFrame {
       } else if (usuario instanceof Cliente) {
         navegador.agregarPagina(new MenuCliente());
       }
+    } else {
+      System.out.println("sesion no iniciada");
     }
-
   }
 
   public static void main(String[] args) {
-    PaginaPrincipal pp;
     try {
-      pp = new PaginaPrincipal();
+      PaginaPrincipal pp = new PaginaPrincipal();
       pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
-      // pp.setUndecorated(true);
       pp.setResizable(false);
       pp.setVisible(true);
+      // pp.setUndecorated(true);
     } catch (ClassNotFoundException | IOException e) {
       System.out.println("Carga de datos fallida");
       e.printStackTrace();
-
     }
   }
 }

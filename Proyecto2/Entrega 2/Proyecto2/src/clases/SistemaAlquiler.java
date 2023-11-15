@@ -12,13 +12,17 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
 
 	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
 		cargarDatos();
+	}
+
+	// FIXME: esta funcion esta unicamente para pruebas
+	public Empleado getPrimerEmpleado() {
+		return datos.getPrimerEmpleado();
 	}
 
 	/*
