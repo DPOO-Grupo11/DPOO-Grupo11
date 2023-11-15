@@ -20,9 +20,16 @@ public class SistemaAlquiler {
 		cargarDatos();
 	}
 
-	// FIXME: esta funcion esta unicamente para pruebas
-	public Empleado getPrimerEmpleado() {
-		return datos.getPrimerEmpleado();
+	public boolean sesionIniciada() {
+		return datos.sesionIniciada();
+	}
+
+	public void establecerUsuario(Usuario u) {
+		datos.establecerUsuario(u);
+	}
+
+	public Usuario getUsuarioActual() {
+		return datos.getUsuarioActual();
 	}
 
 	/*
@@ -95,13 +102,13 @@ public class SistemaAlquiler {
 		datos.nuevoAdmin(nuevoAdmin);
 	}
 
-	public void registroEmpleado(String usuario, String clave, String rol, Sede sede) throws Exception {
-		Empleado empleado = new Empleado(usuario, clave, rol, sede);
+	public Empleado registroEmpleado(String usuario, String clave, String rol, Sede sede) throws Exception {
 		if (datos.empleadoExiste(usuario)) {
 			throw new Exception("Ya existe un usuario con este nombre, intente con otro");
 		}
+		Empleado empleado = new Empleado(usuario, clave, rol, sede);
 		datos.nuevoEmpleado(empleado);
-
+		return empleado;
 	}
 
 	public void eliminarEmpleado(String usuario) throws Exception {

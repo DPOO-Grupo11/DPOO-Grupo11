@@ -32,9 +32,12 @@ public class ContenedorDeDatos implements Serializable {
 	// se utiliza como id para las reservas
 	private int contadorReservas = 0;
 
-	// FIXME: esta funcion esta unicamente para pruebas
-	public Empleado getPrimerEmpleado() {
-		return empleados.values().iterator().next();
+	public boolean sesionIniciada() {
+		return usuario != null;
+	}
+
+	public void establecerUsuario(Usuario u) {
+		this.usuario = u;
 	}
 
 	public ContenedorDeDatos() {
@@ -205,9 +208,6 @@ public class ContenedorDeDatos implements Serializable {
 	/*
 	 * setters
 	 */
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public void setInventario(Inventario inventario) {
 		this.inventario = inventario;

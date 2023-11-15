@@ -9,4 +9,9 @@ public class Combo extends JComboBox<String> {
     setEditable(editable);
   }
 
+  @Override
+  public String getSelectedItem() {
+    return (String) super.getSelectedItem();
+  }
+
 }
