@@ -12,6 +12,7 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import clases.Admin;
 import clases.Cliente;
+import clases.ContenedorDeDatos;
 import clases.Empleado;
 import clases.SistemaAlquiler;
 import clases.Usuario;
@@ -32,7 +33,8 @@ public class Navegador extends JPanel {
   private CardLayout card;
 
   public Navegador(
-      SistemaAlquiler sistemaAlquiler) {
+      SistemaAlquiler sistemaAlquiler,
+      ContenedorDeDatos contenedorDatos) {
 
     this.sistemaAlquiler = sistemaAlquiler;
     paneles = new ArrayList<JPanel>();
@@ -75,7 +77,7 @@ public class Navegador extends JPanel {
       } else if (usuario instanceof Empleado) {
         agregarPagina(new MenuEmpleado(this, sistemaAlquiler, (Empleado) usuario));
       } else if (usuario instanceof Cliente) {
-        agregarPagina(new MenuCliente());
+        agregarPagina(new MenuCliente(contenedorDatos,sistemaAlquiler));
       }
     } else {
       System.out.println("sesion no iniciada");

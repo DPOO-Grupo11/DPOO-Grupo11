@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import clases.Admin;
 import clases.Cliente;
+import clases.ContenedorDeDatos;
 import clases.Empleado;
 import clases.SistemaAlquiler;
 import clases.Usuario;
@@ -26,6 +27,7 @@ public class PaginaPrincipal extends JFrame {
 
   private final Navegador nav;
   private final SistemaAlquiler sistemaAlquiler;
+  private final ContenedorDeDatos contenedorDatos;
 
   public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,8 +36,10 @@ public class PaginaPrincipal extends JFrame {
     setBackground(new Color(255, 192, 203));
     setOpacity(1f);
     sistemaAlquiler = new SistemaAlquiler();
+    contenedorDatos = new ContenedorDeDatos();
+    
     sistemaAlquiler.cargarDatos();
-    nav = new Navegador(sistemaAlquiler);
+    nav = new Navegador(sistemaAlquiler,contenedorDatos);
     add(nav, BorderLayout.CENTER);
   }
 
