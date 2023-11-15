@@ -1,34 +1,43 @@
 package interfaz;
 
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.plaf.TabbedPaneUI;
 
 import clases.SistemaAlquiler;
 import clases.Usuario;
+import interfaz.registro.Login;
 
 /**
  * se encarga de agregar y quitar paginas
  */
-public class Navegador extends JLayeredPane {
+public class Navegador extends JPanel {
   private final boolean modoPruebaActivado = true;
-  private int indicePagina;
 
   private Usuario usuario;
   private final SistemaAlquiler sistemaAlquiler;
 
+  private ArrayList<JPanel> paneles;
+
   public Navegador(
       Usuario usuario,
       SistemaAlquiler sistemaAlquiler) {
+
     this.usuario = usuario;
     this.sistemaAlquiler = sistemaAlquiler;
-    this.indicePagina = 1;
+    paneles = new ArrayList<JPanel>();
+
     // amarillo
     setBackground(new Color(255, 255, 0));
     setOpaque(true);
-    // add(new Login(), indicePagina);
+    setLayout(new CardLayout());
+
+    add(new Login(this, sistemaAlquiler));
     // if (modoPruebaActivado) {
     // // TODO: aca agregar paginas que se van a probar
     // agregarPagina(new MenuEmpleado(this, sistemaAlquiler, null));
@@ -36,18 +45,14 @@ public class Navegador extends JLayeredPane {
   }
 
   public void agregarPagina(JPanel panel) {
-    // getComponentsInLayer(indicePagina)[0].setVisible(false);
-    indicePagina++;
-    add(panel, indicePagina);
+    paneles.add(panel);
+    add(panel);
   }
 
   public void paginaAnterior() {
-    if (indicePagina <= 0) {
+    int i = paneles.size() - 1;
+    if (i <= 0)
       return;
-    }
-    remove(indicePagina);
-    indicePagina--;
-    getComponentsInLayer(indicePagina)[0].setVisible(true);
+    remove(paneles.remove(i));
   }
-
 }
