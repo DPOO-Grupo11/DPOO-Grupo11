@@ -14,6 +14,10 @@ public class Inventario implements Serializable {
 	 */
 	public static final List<String> prioridadCategoria = Arrays
 			.asList(new String[] { "Pequeños", "SUV", "Vans", "Lujo", "Otros" });
+	// TODO: sedes?
+	public static final String[] categorias = new String[] { "Pequeños", "SUV", "Vans", "Lujo", "Otros" };
+	public static final String[] sedes = new String[] { "Sede 1", "Sede 2",
+			"Sede 3", "Sede 4" };
 	public static final Map<String, Tarifa> tarifas = new HashMap<String, Tarifa>() {
 		{
 			put("Pequeños", new Tarifa(25000L, 50000L, 25000L));

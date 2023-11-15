@@ -107,11 +107,12 @@ public class MenuPrincipal {
 	}
 
 	// main -------------------------------------------------------------------
-
+/*
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		MenuPrincipal menuprincipal = new MenuPrincipal();
 		menuprincipal.mostrarMenu();
 
 	}
+	*/
 
 }

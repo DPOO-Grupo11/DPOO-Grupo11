@@ -7,22 +7,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
 
-	// toca pedir archivo de persistencia cada vez que se inicie programa
-	private static final String dirDatos = System.getProperty("user.dir");;
-
 	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
 		cargarDatos();
+	}
+
+	// FIXME: esta funcion esta unicamente para pruebas
+	public Empleado getPrimerEmpleado() {
+		return datos.getPrimerEmpleado();
 	}
 
 	/*

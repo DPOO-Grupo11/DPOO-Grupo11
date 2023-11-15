@@ -1,17 +1,66 @@
 package interfaz;
 
+import interfaz.menuadmin.*;
+import interfaz.menucliente.*;
+import interfaz.menuempleado.*;
+import interfaz.registro.Login;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+import clases.Admin;
+import clases.Cliente;
+import clases.Empleado;
+import clases.SistemaAlquiler;
+import clases.Usuario;
 
 /**
  * El login se hace aca
  */
 public class PaginaPrincipal extends JFrame {
-  // TODO: esta sera la pagina principal
+
+  private Usuario usuario;
+  private final Navegador nav;
+  private final SistemaAlquiler sistemaAlquiler;
+
+  public PaginaPrincipal() throws FileNotFoundException, ClassNotFoundException, IOException {
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setLayout(new BorderLayout());
+    // rosado
+    setBackground(new Color(255, 192, 203));
+    setOpacity(1f);
+    sistemaAlquiler = new SistemaAlquiler();
+    sistemaAlquiler.cargarDatos();
+    nav = new Navegador(usuario, sistemaAlquiler);
+    add(new Login(nav, sistemaAlquiler));
+    // add(navegador, BorderLayout.CENTER);
+    if (usuario != null) {
+      System.out.println("sesion iniciada abriendo menu correspondiente");
+      if (usuario instanceof Admin) {
+        nav.agregarPagina(new MenuAdmin());
+      } else if (usuario instanceof Empleado) {
+        nav.agregarPagina(new MenuEmpleado(nav, sistemaAlquiler, (Empleado) usuario));
+      } else if (usuario instanceof Cliente) {
+        nav.agregarPagina(new MenuCliente());
+      }
+    } else {
+      System.out.println("sesion no iniciada");
+    }
+  }
 
   public static void main(String[] args) {
-    PaginaPrincipal pp = new PaginaPrincipal();
-    pp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    pp.setResizable(false);
-    pp.setVisible(true);
+    try {
+      PaginaPrincipal pp = new PaginaPrincipal();
+      pp.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      pp.setResizable(false);
+      pp.setVisible(true);
+      // pp.setUndecorated(true);
+    } catch (ClassNotFoundException | IOException e) {
+      System.out.println("Carga de datos fallida");
+      e.printStackTrace();
+    }
   }
 }
