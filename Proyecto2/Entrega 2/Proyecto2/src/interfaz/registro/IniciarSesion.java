@@ -19,8 +19,13 @@ public class IniciarSesion extends JPanel {
     this.nav = nav;
     this.sistemaAlquiler = sistemaAlquiler;
     setLayout(new GridLayout(0, 1, 25, 25));
+    Boton devolver = new Boton("Atras", () -> {
+      nav.paginaAnterior();
+      return null;
+    });
     Texto nombreUsuario = new Texto("Nombre Usuario", true);
     Texto clave = new Texto("Contraseña", true);
+    add(devolver);
     add(new JLabel("Nombre Usuario"));
     add(nombreUsuario);
     add(new JLabel("Contraseña"));
