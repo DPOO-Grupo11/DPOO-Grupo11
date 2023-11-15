@@ -4,6 +4,7 @@ import interfaz.menuadmin.*;
 import interfaz.menucliente.*;
 import interfaz.menuempleado.*;
 import interfaz.registro.Login;
+import interfaz.registro.RegistrarCliente;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,7 +36,7 @@ public class PaginaPrincipal extends JFrame {
     sistemaAlquiler = new SistemaAlquiler();
     sistemaAlquiler.cargarDatos();
     nav = new Navegador(usuario, sistemaAlquiler);
-    add(new Login(nav, sistemaAlquiler));
+    add(new RegistrarCliente(nav, sistemaAlquiler));
     // add(navegador, BorderLayout.CENTER);
     if (usuario != null) {
       System.out.println("sesion iniciada abriendo menu correspondiente");

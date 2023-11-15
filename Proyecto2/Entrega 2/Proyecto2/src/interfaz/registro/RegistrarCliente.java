@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import clases.SistemaAlquiler;
 import interfaz.Navegador;
 import interfaz.componentes.Boton;
+import interfaz.componentes.MostrarYEscogerImagen;
 import interfaz.componentes.Texto;
 import interfaz.menuempleado.MetodoDePago;
 
