@@ -22,6 +22,10 @@ public class SistemaAlquiler {
 		return this.datos;
 	}
 
+	public ArrayList<Reserva> getReservas() {
+		return datos.getReservas();
+	}
+
 	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
 		cargarDatos();
 	}
@@ -32,6 +36,10 @@ public class SistemaAlquiler {
 
 	public void establecerUsuario(Usuario u) {
 		datos.establecerUsuario(u);
+	}
+
+	public void cerrarSesion() {
+		datos.cerrarSesion();
 	}
 
 	public Usuario getUsuarioActual() {

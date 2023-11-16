@@ -40,6 +40,10 @@ public class ContenedorDeDatos implements Serializable {
 		this.usuario = u;
 	}
 
+	public void cerrarSesion() {
+		this.usuario = null;
+	}
+
 	public ContenedorDeDatos() {
 		this.usuario = null;
 		this.adminGeneral = new Admin("AdministradorGen", "SenecaDPOO");
@@ -152,6 +156,10 @@ public class ContenedorDeDatos implements Serializable {
 			throw new Exception("El nombre de usuario ya esta en uso. Intenta con otro");
 		}
 		clientes.put(cliente.usuario, cliente);
+	}
+
+	public ArrayList<Reserva> getReservas() {
+		return new ArrayList<Reserva>(reservas.values());
 	}
 
 	/*

@@ -70,6 +70,11 @@ public class Navegador extends JPanel {
     remove(paneles.remove(i));
   }
 
+  public void cerrarSesion() {
+    paginaAnterior();
+    sistemaAlquiler.cerrarSesion();
+  }
+
   public void login() {
     Usuario usuario = sistemaAlquiler.getUsuarioActual();
     if (usuario != null) {
