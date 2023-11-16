@@ -37,10 +37,20 @@ public class PaginaPrincipal extends JFrame {
     setOpacity(1f);
     sistemaAlquiler = new SistemaAlquiler();
     contenedorDatos = new ContenedorDeDatos();
-    
+
     sistemaAlquiler.cargarDatos();
-    nav = new Navegador(sistemaAlquiler,contenedorDatos);
+    nav = new Navegador(sistemaAlquiler, contenedorDatos);
     add(nav, BorderLayout.CENTER);
+  }
+
+  @Override
+  public void dispose() {
+    try {
+      sistemaAlquiler.guardarDatos();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    super.dispose();
   }
 
   public static void main(String[] args) {
