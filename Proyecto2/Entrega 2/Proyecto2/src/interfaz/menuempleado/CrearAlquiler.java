@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import clases.Inventario;
 import clases.SistemaAlquiler;
 import clases.TarjetaDeCredito;
-import clases.Usuario;
 import interfaz.Navegador;
 import interfaz.componentes.Boton;
 import interfaz.componentes.Combo;
@@ -20,19 +19,16 @@ import interfaz.registro.ObtenerTarjeta;
 
 public class CrearAlquiler extends JPanel {
 
-        private Usuario usuario;
-        private final Navegador navegador;
+        private final Navegador nav;
         private final SistemaAlquiler sistemaAlquiler;
 
         private ObtenerTarjeta obtenerTarjeta;
         private TarjetaDeCredito tarjeta;
 
         public CrearAlquiler(
-                        Usuario usuario,
                         final Navegador navegador,
                         SistemaAlquiler sistemaAlquiler) {
-                this.usuario = usuario;
-                this.navegador = navegador;
+                this.nav = navegador;
                 this.sistemaAlquiler = sistemaAlquiler;
 
                 setLayout(new GridLayout(0, 2));
@@ -91,6 +87,10 @@ public class CrearAlquiler extends JPanel {
                                         null,
                                         sistemaAlquiler.getCliente(idCliente.getText()),
                                         null);
+                        return null;
+                }));
+                add(new Boton("Atras", () -> {
+                        nav.paginaAnterior();
                         return null;
                 }));
         }

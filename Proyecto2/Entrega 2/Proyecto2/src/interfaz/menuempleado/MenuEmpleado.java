@@ -1,6 +1,7 @@
 package interfaz.menuempleado;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ public class MenuEmpleado extends JPanel {
     this.nav = nav;
     this.empleado = empleado;
     this.sistemaAlquiler = sistemaAlquiler;
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    setLayout(new GridLayout(0, 1));
     // rojo
     setBackground(new Color(255, 0, 0));
     add(new Boton("Formalizar Alquiler", () -> {
@@ -27,7 +28,7 @@ public class MenuEmpleado extends JPanel {
       return null;
     }));
     add(new Boton("Crear Alquiler", () -> {
-      nav.agregarPagina(new CrearAlquiler(empleado, nav, sistemaAlquiler));
+      nav.agregarPagina(new CrearAlquiler(nav, sistemaAlquiler));
       return null;
     }));
     add(new Boton("Cerrar Sesion", () -> {
