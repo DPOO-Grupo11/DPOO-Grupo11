@@ -60,6 +60,8 @@ public class SistemaAlquiler {
 			is.close();
 		} else {
 			datos = new ContenedorDeDatos();
+			CSVReader r = new CSVReader(this, datos);
+
 		}
 	}
 
