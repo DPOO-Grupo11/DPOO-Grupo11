@@ -7,6 +7,7 @@ public class Texto extends TextField {
     setText(texto);
     setEditable(editable);
     setFocusable(editable);
+    setName(texto);
   }
 
 }

@@ -29,6 +29,7 @@ public class RegistrarCliente extends JPanel {
     this.sistemaAlquiler = sistemaAlquiler;
     // panel izquierdo
     JPanel pi = new JPanel();
+    Texto usuario = new Texto("", true);
     Texto nombre = new Texto("Nombre y Apellido", true);
     Texto numero = new Texto("Numero Telefonico", true);
     Texto direccion = new Texto("Direccion", true);
