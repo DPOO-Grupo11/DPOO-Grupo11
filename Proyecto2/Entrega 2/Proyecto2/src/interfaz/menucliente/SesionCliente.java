@@ -13,13 +13,14 @@ import javax.swing.JTextField;
 
 import clases.Cliente;
 import clases.ContenedorDeDatos;
+import clases.SistemaAlquiler;
 import clases.Usuario;
 
 public class SesionCliente extends JFrame {
 	
 	ContenedorDeDatos CD;
 	
-	public  SesionCliente(ContenedorDeDatos CD) {
+	public  SesionCliente(ContenedorDeDatos CD,SistemaAlquiler SA) {
 		
 		this.CD=CD;
 		
@@ -56,7 +57,7 @@ public class SesionCliente extends JFrame {
 				if (logInUser==null) {
 					advertenciaUsuario lookOut= new advertenciaUsuario();
 				}else {
-					LoggedInMenu menu= new LoggedInMenu();
+					LoggedInMenu menu= new LoggedInMenu(LogInUser,SA);
 				}
 			}});
 	}

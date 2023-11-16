@@ -62,9 +62,11 @@ public class Navegador extends JPanel {
   }
 
   public void paginaAnterior() {
-    int i = paneles.size() - 1;
-    if (i <= 0)
+    if (paneles.size() <= 0) {
+      System.out.println("no hay paginas anteriores");
       return;
+    }
+    int i = paneles.size() - 1;
     remove(paneles.remove(i));
   }
 
