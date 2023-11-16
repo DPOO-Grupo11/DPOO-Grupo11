@@ -34,7 +34,7 @@ public class ObtenerTarjeta extends JFrame {
     add(aceptar);
   }
 
-  TarjetaDeCredito solicitarInfo() {
+  public TarjetaDeCredito solicitarInfo() {
     return new TarjetaDeCredito(numero.getText(), fecha.getText(), cvv.getText());
   }
 }

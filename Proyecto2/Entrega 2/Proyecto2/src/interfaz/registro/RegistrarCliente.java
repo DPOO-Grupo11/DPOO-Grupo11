@@ -69,7 +69,11 @@ public class RegistrarCliente extends JPanel {
     // panel derecho
     JPanel pd = new JPanel();
     pd.setLayout(new BorderLayout());
-    // pd.add(new MostrarYEscogerImagen(), BorderLayout.CENTER);
+    pd.add(new Boton("Atras", () -> {
+      nav.paginaAnterior();
+      return null;
+    }), BorderLayout.NORTH);
+    pd.add(new MostrarYEscogerImagen(), BorderLayout.CENTER);
     JPanel box = new JPanel();
     box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
     pd.add(box, BorderLayout.SOUTH);
