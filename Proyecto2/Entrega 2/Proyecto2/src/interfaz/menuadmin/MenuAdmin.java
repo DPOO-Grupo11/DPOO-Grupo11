@@ -53,7 +53,7 @@ public class MenuAdmin extends JPanel {
             addButton(buttonPanel, "Agregar Vehiculo", new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    nav.agregarPagina(new AgregarVehiculo());
+                    nav.agregarPagina(new AgregarVehiculo(sistemaAlquiler));
                 }
             });
             
