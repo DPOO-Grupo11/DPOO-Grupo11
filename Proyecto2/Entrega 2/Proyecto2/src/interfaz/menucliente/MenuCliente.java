@@ -14,8 +14,9 @@ import clases.ContenedorDeDatos;
 import clases.SistemaAlquiler;
 
 public class MenuCliente extends JPanel {
-	
-	public  MenuCliente(ContenedorDeDatos CD,SistemaAlquiler SA) {
+	private static final long serialVersionUID = -4627965134321784440L;
+
+	public  MenuCliente(SistemaAlquiler SA) {
 		
 		JLabel titleLabel = new JLabel("Menu Cliente", SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
@@ -35,7 +36,7 @@ public class MenuCliente extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 
-				SesionCliente sesion= new SesionCliente(CD);
+				SesionCliente sesion= new SesionCliente(SA.getContenedorDeDatos());
 			}});
 		
 		registro.addActionListener(new ActionListener() {

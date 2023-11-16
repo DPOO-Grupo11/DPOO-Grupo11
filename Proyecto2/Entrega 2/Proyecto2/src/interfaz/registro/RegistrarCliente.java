@@ -30,13 +30,21 @@ public class RegistrarCliente extends JPanel {
     // panel izquierdo
     JPanel pi = new JPanel();
     Texto usuario = new Texto("", true);
+    Texto clave = new Texto("", true);
     Texto nombre = new Texto("Nombre y Apellido", true);
     Texto numero = new Texto("Numero Telefonico", true);
+    Texto fechaNacimiento = new Texto("Numero Telefonico", true);
     Texto direccion = new Texto("Direccion", true);
-    Texto correo = new Texto("Correo", true);
+    Texto nacionalidad = new Texto("Correo", true);
     Texto licencia = new Texto("Licencia", true);
     Texto cedula = new Texto("Cedula", true);
     pi.setLayout(new BoxLayout(pi, BoxLayout.Y_AXIS));
+    // usuario
+    pi.add(new JLabel("Nombre de Usuario"));
+    pi.add(usuario);
+    // clave
+    pi.add(new JLabel("Contraseña"));
+    pi.add(clave);
     // nombre
     pi.add(new JLabel("Nombre y Apellido"));
     pi.add(nombre);
@@ -46,9 +54,12 @@ public class RegistrarCliente extends JPanel {
     // direccion
     pi.add(new JLabel("Direccion"));
     pi.add(direccion);
-    // correo
-    pi.add(new JLabel("Correo"));
-    pi.add(correo);
+    // fecha nacimiento
+    pi.add(new JLabel("Fecha de Nacimiento"));
+    pi.add(fechaNacimiento);
+    // nacionalidad
+    pi.add(new JLabel("Nacionalidad"));
+    pi.add(nacionalidad);
     // licencia
     pi.add(new JLabel("Licencia"));
     pi.add(licencia);
@@ -79,10 +90,22 @@ public class RegistrarCliente extends JPanel {
       return null;
     }));
     box.add(new Boton("Finalizar", () -> {
-      sistemaAlquiler.registroCliente(usuario.getText(), clave.getText(), TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY,
-          TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY,
-          TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY,
-          TOOL_TIP_TEXT_KEY);
+      sistemaAlquiler.registroCliente(
+          usuario.getText(),
+          clave.getText(),
+          nombre.getText(),
+          numero.getText(),
+          direccion.getText(),
+          fechaNacimiento.getText(),
+          nacionalidad.getText(),
+          "",
+          "",
+          "",
+          "",
+          "",
+          tarjeta.getNumero(),
+          tarjeta.getFechaVencimiento(),
+          tarjeta.getCvv());
       return null;
     }));
     // organizar

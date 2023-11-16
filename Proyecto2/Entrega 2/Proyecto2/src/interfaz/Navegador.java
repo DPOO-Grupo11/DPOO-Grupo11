@@ -77,7 +77,7 @@ public class Navegador extends JPanel {
       } else if (usuario instanceof Empleado) {
         agregarPagina(new MenuEmpleado(this, sistemaAlquiler, (Empleado) usuario));
       } else if (usuario instanceof Cliente) {
-        agregarPagina(new MenuCliente(contenedorDatos,sistemaAlquiler));
+        agregarPagina(new MenuCliente(sistemaAlquiler));
       }
     } else {
       System.out.println("sesion no iniciada");

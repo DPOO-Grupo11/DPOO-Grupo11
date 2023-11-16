@@ -15,6 +15,12 @@ import java.util.ArrayList;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
+	
+	// FIXME: no deberia haber accesso directo al contenedor
+	// de datos
+	public ContenedorDeDatos getContenedorDeDatos() {
+		return this.datos;
+	}
 
 	public SistemaAlquiler() throws FileNotFoundException, IOException, ClassNotFoundException {
 		cargarDatos();

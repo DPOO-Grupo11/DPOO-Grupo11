@@ -103,7 +103,8 @@ public class CSVReader {
 		        String comentarios=info[7];
 		        String estado= info[8];
 		        
-		        SA.AgregarVehiculo(placa, marca, color, transmision, clasificacion, sede, estado);
+		        
+		        SA.agregarVehiculo(placa, marca, color, transmision, clasificacion, sede, estado);
 		    }
 		}
 	}
