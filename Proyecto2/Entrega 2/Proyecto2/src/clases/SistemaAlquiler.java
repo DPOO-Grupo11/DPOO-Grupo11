@@ -50,7 +50,7 @@ public class SistemaAlquiler {
 	 */
 	public void cargarDatos() throws IOException, ClassNotFoundException {
 		// cargar bytes de archivo
-		File archivoDatos = new File("Datos/datos");
+		File archivoDatos = new File("./Datos/datos");
 		if (archivoDatos.exists()) {
 			byte[] bytes = Files.readAllBytes(archivoDatos.toPath());
 			// convertir bytes a objeto
@@ -79,14 +79,18 @@ public class SistemaAlquiler {
 		os.close();
 		byte[] bytes = bs.toByteArray();
 		// guardar bytes en archivo
-		File archivoDatos = new File("Data/persistencia");
+		File archivoDatos = new File("./Datos/datos");
 		if (!archivoDatos.exists()) {
 			if (!archivoDatos.createNewFile())
 				throw new FileNotFoundException("no se pudo crear el archivo");
 		}
 		try (FileOutputStream outputStream = new FileOutputStream(archivoDatos)) {
 			outputStream.write(bytes);
+			System.out.println("datos guardados");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	public Empleado getEmpleado(String usuario) {
