@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class SistemaAlquiler {
 	private ContenedorDeDatos datos;
-	
+
 	// FIXME: no deberia haber accesso directo al contenedor
 	// de datos
 	public ContenedorDeDatos getContenedorDeDatos() {
@@ -84,6 +84,10 @@ public class SistemaAlquiler {
 		try (FileOutputStream outputStream = new FileOutputStream(archivoDatos)) {
 			outputStream.write(bytes);
 		}
+	}
+
+	public Cliente getCliente(String usuario) {
+		return datos.getCliente(usuario);
 	}
 
 	public Usuario getUsuario(String usuario, String clave) {

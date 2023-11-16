@@ -70,6 +70,10 @@ public class CrearAlquiler extends JPanel {
                 add(new JLabel("Fecha de Entrega:"));
                 Texto fechaEntrega = new Texto("", true);
                 add(fechaEntrega);
+                // usuario
+                add(new JLabel("Cliente (ID):"));
+                Texto idCliente = new Texto("", true);
+                add(idCliente);
                 // seguro
                 add(new JLabel("Seguro:"));
                 Combo seguro = new Combo(Inventario.seguros, true);
@@ -81,11 +85,11 @@ public class CrearAlquiler extends JPanel {
                         LocalDateTime recogida = LocalDateTime.parse(fechaRecogida.getText(), formatter);
                         sistemaAlquiler.crearAlquiler(
                                         comboCategoria.getSelectedItem(),
+                                        recogida,
+                                        comboRecogida.getSelectedItem(),
+                                        comboEntrega.getSelectedItem(),
                                         null,
-                                        "",
-                                        "",
-                                        null,
-                                        null,
+                                        sistemaAlquiler.getCliente(idCliente.getText()),
                                         null);
                         return null;
                 }));

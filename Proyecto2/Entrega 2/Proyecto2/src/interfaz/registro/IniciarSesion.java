@@ -32,6 +32,7 @@ public class IniciarSesion extends JPanel {
     add(clave);
     add(new Boton("Aceptar", () -> {
       Usuario u = sistemaAlquiler.getUsuario(nombreUsuario.getText(), clave.getText());
+      sistemaAlquiler.establecerUsuario(u);
       if (u == null) {
         // TODO: mostrar error, clave incorrecta
       } else {

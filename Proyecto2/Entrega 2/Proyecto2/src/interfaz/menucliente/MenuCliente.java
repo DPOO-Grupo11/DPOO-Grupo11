@@ -16,44 +16,47 @@ import clases.SistemaAlquiler;
 public class MenuCliente extends JPanel {
 	private static final long serialVersionUID = -4627965134321784440L;
 
-	public  MenuCliente(SistemaAlquiler SA) {
-		
+	public MenuCliente(SistemaAlquiler SA) {
+
 		JLabel titleLabel = new JLabel("Menu Cliente", SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-		
-		JPanel buttonPanel= new JPanel();
+
+		JPanel buttonPanel = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+
 		JButton inicio;
 		JButton registro;
 		JButton salir;
-		add(inicio=new JButton("Iniciar Sesion"));
-		add(registro=new JButton("Registrarse"));
-		add(salir=new JButton("Salir"));
-		
+		add(inicio = new JButton("Iniciar Sesion"));
+		add(registro = new JButton("Registrarse"));
+		add(salir = new JButton("Salir"));
+
 		inicio.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 
-				SesionCliente sesion= new SesionCliente(SA.getContenedorDeDatos());
-			}});
-		
+				//
+				SesionCliente sesion = new SesionCliente(SA.getContenedorDeDatos(), sistemaAlquiler);
+			}
+		});
+
 		registro.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 
-				RegistroCliente registro=new RegistroCliente();
-			}});
-		
+				//
+				RegistroCliente registro = new RegistroCliente();
+			}
+		});
+
 		salir.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 
+				//
 				System.exit(0);
-			}});
+			}
+		});
 	}
 
 }
