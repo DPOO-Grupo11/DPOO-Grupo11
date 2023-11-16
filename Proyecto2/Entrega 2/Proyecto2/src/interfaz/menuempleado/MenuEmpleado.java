@@ -23,7 +23,7 @@ public class MenuEmpleado extends JPanel {
     // rojo
     setBackground(new Color(255, 0, 0));
     add(new Boton("Formalizar Alquiler", () -> {
-      nav.agregarPagina(new FormalizarAlquiler());
+      nav.agregarPagina(new FormalizarAlquiler(nav, sistemaAlquiler));
       return null;
     }));
     add(new Boton("Crear Alquiler", () -> {
@@ -31,7 +31,7 @@ public class MenuEmpleado extends JPanel {
       return null;
     }));
     add(new Boton("Cerrar Sesion", () -> {
-      nav.paginaAnterior();
+      nav.cerrarSesion();
       return null;
     }));
   }
