@@ -31,7 +31,8 @@ public class IniciarSesion extends JPanel {
     add(new JLabel("Contraseña"));
     add(clave);
     add(new Boton("Aceptar", () -> {
-      System.out.println("nombre usuario: " + nombreUsuario.getText() + ", clave: " + clave.getText());
+      System.out.println("nombre usuario: " + nombreUsuario.getText() + ", clave: "
+          + sistemaAlquiler.getEmpleado(nombreUsuario.getText()).getContraseña());
       Usuario u = sistemaAlquiler.getUsuario(nombreUsuario.getText(), clave.getText());
       sistemaAlquiler.establecerUsuario(u);
       if (u == null) {

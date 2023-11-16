@@ -20,6 +20,7 @@ public class CSVReader {
 			cargarClientes();
 			cargarSedes();
 			cargarAdmins();
+			cargarEmpleados();
 		} catch (Exception e) {
 			// FIXME: que hacer si falla?
 			System.out.println("Carga de datos inicial fallida");
@@ -27,8 +28,22 @@ public class CSVReader {
 		}
 	}
 
-	private void cargarAdmins() throws Exception {
+	private void cargarEmpleados() throws FileNotFoundException, IOException {
+		try (BufferedReader br = new BufferedReader(new FileReader(
+				"./Persistencia/Empleados.csv"))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] info = line.split(";");
+				try {
+					SA.registroEmpleado(info[0], info[1], info[2], SA.getSede(info[3]));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
+	private void cargarAdmins() throws Exception {
 		try (BufferedReader br = new BufferedReader(new FileReader(
 				"./Persistencia/Administradores.csv"))) {
 			String line;
@@ -42,11 +57,9 @@ public class CSVReader {
 				}
 			}
 		}
-
 	}
 
 	private void cargarSedes() throws NumberFormatException, IllegalArgumentException, Exception {
-
 		try (BufferedReader br = new BufferedReader(new FileReader(
 				"./Persistencia/Sedes.csv"))) {
 			String line;
@@ -94,7 +107,7 @@ public class CSVReader {
 				String nacionalidad = info[6];
 				String documento = info[7];
 				LicenciaDeConduccion licencia = new LicenciaDeConduccion(info[8], info[9], info[10], info[11]);
-				TarjetaDeCredito tarjeta = new TarjetaDeCredito(info[13], info[14], "134");
+				TarjetaDeCredito tarjeta = new TarjetaDeCredito(info[12], info[13], "134");
 
 				Cliente nuevo = new Cliente(usuario, contraseña, nombre, numero, direccion, fechaNacimiento, nacionalidad,
 						documento, licencia, tarjeta);

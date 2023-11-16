@@ -50,7 +50,7 @@ public class SistemaAlquiler {
 	 */
 	public void cargarDatos() throws IOException, ClassNotFoundException {
 		// cargar bytes de archivo
-		File archivoDatos = new File("Datos/persistencia");
+		File archivoDatos = new File("Datos/datos");
 		if (archivoDatos.exists()) {
 			byte[] bytes = Files.readAllBytes(archivoDatos.toPath());
 			// convertir bytes a objeto
@@ -60,9 +60,10 @@ public class SistemaAlquiler {
 			is.close();
 		} else {
 			datos = new ContenedorDeDatos();
-			CSVReader r = new CSVReader(this, datos);
-
+			// CSVReader r = new CSVReader(this, datos);
 		}
+		CSVReader r = new CSVReader(this, datos);
+
 	}
 
 	/**
@@ -86,6 +87,10 @@ public class SistemaAlquiler {
 		try (FileOutputStream outputStream = new FileOutputStream(archivoDatos)) {
 			outputStream.write(bytes);
 		}
+	}
+
+	public Empleado getEmpleado(String usuario) {
+		return datos.getEmpleado(usuario);
 	}
 
 	public Cliente getCliente(String usuario) {

@@ -165,13 +165,17 @@ public class ContenedorDeDatos implements Serializable {
 		return adminGeneral;
 	}
 
+	public Empleado getEmpleado(String usuario) {
+		return empleados.get(usuario);
+	}
+
 	public Cliente getCliente(String usuario) {
 		return clientes.get(usuario);
 	}
 
 	public Usuario getUsuario(String usuario, String clave) {
 		System.out.print("Usuarios: " + getUsuarios().keySet().toString() + ", claves: "
-				+ getUsuarios().get("AdministradorGen").contraseña);
+				+ getUsuarios().get("usuario1").contraseña);
 		Usuario usuarioInteres = getUsuarios().get(usuario);
 		if (clave.equals(usuarioInteres.getContraseña())) {
 			return usuarioInteres;
